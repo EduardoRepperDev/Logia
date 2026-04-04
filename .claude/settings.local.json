@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ':*)",
+      "Bash(where python:*)",
+      "Bash(where py:*)",
+      "Bash(php --version)",
+      "Bash(C:/Users/oscar/AppData/Local/Programs/Python/Python312/python.exe -c ':*)",
+      "Bash(php artisan:*)",
+      "Bash(\"C:/Users/oscar/AppData/Local/Programs/Python/Python312/python.exe\" -c \"import json,sys; d=json.load\\(sys.stdin\\); [print\\(k,':',v\\) for k,v in d.get\\('require',{}\\).items\\(\\)]\")"
+    ]
+  }
+}
