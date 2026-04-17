@@ -17,6 +17,12 @@
     <meta property="og:image"       content="@yield('og_image', asset('images/og-default.jpg'))">
     <meta property="og:url"         content="@yield('og_url', url()->current())">
 
+    {{-- Twitter Cards --}}
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="@yield('og_title', 'Logia Consulting')">
+    <meta name="twitter:description" content="@yield('og_description', 'Capacitación certificada en Siigo, Soft Restaurant y Zoho One.')">
+    <meta name="twitter:image"       content="@yield('og_image', asset('images/og-default.jpg'))">
+
     {{-- Google Fonts: Inter --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,6 +30,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    @livewireStyles
     @stack('styles')
 </head>
 <body class="@yield('theme_class', 'theme-siigo') font-sans antialiased bg-white text-neutral-900 pt-[72px]">
@@ -36,6 +43,7 @@
 
     @include('partials.footer')
 
+    @livewireScripts
     @stack('scripts')
 </body>
 </html>

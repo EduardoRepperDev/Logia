@@ -46,7 +46,7 @@
                     <li><a href="{{ url('/nosotros') }}"  class="text-gray-400 hover:text-white transition-colors duration-200">Nosotros</a></li>
                     <li><a href="{{ url('/blog') }}"      class="text-gray-400 hover:text-white transition-colors duration-200">Blog</a></li>
                     <li><a href="{{ url('/contacto') }}"  class="text-gray-400 hover:text-white transition-colors duration-200">Contacto</a></li>
-                    <li><a href="{{ url('/agendar') }}"   class="text-gray-400 hover:text-white transition-colors duration-200">Agendar asesoría</a></li>
+                    <li><a href="{{ route('booking') }}"   class="text-gray-400 hover:text-white transition-colors duration-200">Agendar asesoría</a></li>
                 </ul>
             </div>
 
@@ -63,7 +63,7 @@
                         <a href="tel:+525512345678" class="hover:text-white transition-colors duration-200">+52 55 1234 5678</a>
                     </li>
                 </ul>
-                <a href="{{ url('/agendar') }}" class="btn-primary mt-6 text-xs w-full justify-center">
+                <a href="{{ route('booking') }}" class="btn-primary mt-6 text-xs w-full justify-center">
                     Agendar sesión gratuita
                 </a>
             </div>
