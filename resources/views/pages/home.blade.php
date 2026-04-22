@@ -33,69 +33,119 @@
 </script>
 <style>
 /* Hero carousel */
-.hero-slide{position:absolute;inset:0;display:flex;align-items:center;opacity:0;transform:translateY(14px);transition:opacity .85s cubic-bezier(.22,1,.36,1),transform .85s cubic-bezier(.22,1,.36,1)}
+.hero-slide{position:absolute;inset:0;display:flex;align-items:center;opacity:0;transform:translateY(12px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
 .hero-slide--active{opacity:1;transform:translateY(0);z-index:2}
-@keyframes lc-float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-16px) rotate(2deg)}}
-@keyframes lc-ring{0%{transform:scale(.85);opacity:.65}100%{transform:scale(1.75);opacity:0}}
+@keyframes lc-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes lc-ring{0%{transform:scale(.85);opacity:.5}100%{transform:scale(1.9);opacity:0}}
+@keyframes lc-card-r{from{transform:translateX(52px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes lc-card-l{from{transform:translateX(-52px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes lc-card-u{from{transform:translateY(38px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes lc-card-d{from{transform:translateY(-38px);opacity:0}to{transform:translateY(0);opacity:1}}
+/* Soluciones — brand hover glow */
+.card-hover-siigo{transition:box-shadow .25s ease,border-color .25s ease,transform .25s ease}
+.card-hover-siigo:hover{box-shadow:0 12px 40px rgba(27,77,183,0.18),0 2px 10px rgba(27,77,183,0.07);border-color:rgba(27,77,183,0.3)!important;transform:translateY(-5px)}
+.card-hover-soft{transition:box-shadow .25s ease,border-color .25s ease,transform .25s ease}
+.card-hover-soft:hover{box-shadow:0 12px 40px rgba(232,80,10,0.18),0 2px 10px rgba(232,80,10,0.07);border-color:rgba(232,80,10,0.3)!important;transform:translateY(-5px)}
+.card-hover-zoho{transition:box-shadow .25s ease,border-color .25s ease,transform .25s ease}
+.card-hover-zoho:hover{box-shadow:0 12px 40px rgba(200,32,44,0.18),0 2px 10px rgba(200,32,44,0.07);border-color:rgba(200,32,44,0.3)!important;transform:translateY(-5px)}
 </style>
 @endpush
 
 @section('content')
 
-{{-- ══════════════════════════════════════ HERO — Carousel auto-rotante 4 slides ══ --}}
+{{-- ══════════════════════════════════════ HERO — Carousel claro · 4 slides ══ --}}
 <section class="relative overflow-hidden"
-    style="min-height:calc(100vh - 72px);background:#080F1E"
+    style="min-height:calc(100vh - 72px);background:#FAFAFA"
     x-data="{
         c: 0,
         paused: false,
         timer: null,
-        start() { this.timer = setInterval(() => { if (!this.paused) this.c = (this.c + 1) % 4; }, 6000); },
+        start() { this.timer = setInterval(() => { if (!this.paused) this.c = (this.c + 1) % 4; }, 5000); },
         go(i) { this.c = i; },
         prev() { this.c = (this.c - 1 + 4) % 4; },
         next() { this.c = (this.c + 1) % 4; }
     }"
-    x-init="start()"
+    x-init="start(); $watch('c', () => { $nextTick(() => { $el.querySelectorAll('.hero-slide--active .hero-card').forEach(el => { el.style.animation='none'; el.offsetWidth; el.style.animation=''; }); }); })"
     @mouseenter="paused = true"
     @mouseleave="paused = false">
 
     {{-- ── SLIDE 0: Logia brand — naranja ────────────────────────────────── --}}
     <div class="hero-slide" :class="c===0 ? 'hero-slide--active' : 'pointer-events-none'">
-        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 55% 70% at 72% 50%,rgba(232,80,10,0.15) 0%,transparent 70%)"></div>
+        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 45% 80% at 78% 50%,rgba(232,80,10,0.08) 0%,transparent 65%)"></div>
         <div class="container-brand w-full px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex items-center gap-8 lg:gap-14 py-20 lg:py-0">
+            <div class="flex items-center gap-8 lg:gap-12 py-16 lg:py-0">
                 <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2.5 mb-7">
-                        <span class="block w-1 h-6 rounded-full shrink-0" style="background:#E8500A"></span>
-                        <span class="text-[11px] font-bold tracking-[0.2em] uppercase" style="color:#E8500A">Partner Certificado en México</span>
+                    <div class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 mb-7" style="background:rgba(232,80,10,0.1)">
+                        <span class="w-1.5 h-1.5 rounded-full" style="background:#E8500A"></span>
+                        <span class="text-[11px] font-bold tracking-[0.18em] uppercase" style="color:#E8500A">Partner Certificado en México</span>
                     </div>
-                    <h1 class="font-black text-white tracking-tight mb-6 leading-[0.93]" style="font-size:clamp(2.8rem,6.5vw,5.2rem)">
+                    <h1 class="font-black text-gray-900 tracking-tight mb-5 leading-[0.93]" style="font-size:clamp(2.5rem,5.8vw,4.8rem)">
                         Integramos<br>
                         <span style="color:#E8500A">tecnología</span><br>
-                        y crecimiento.
+                        y crecimiento
+                        <span style="color:#E8500A">empresarial.</span><br>
                     </h1>
-                    <p class="text-white/50 leading-relaxed mb-9 max-w-md" style="font-size:clamp(0.875rem,1.4vw,1.05rem)">
+                    <p class="text-gray-500 leading-relaxed mb-8 max-w-md" style="font-size:clamp(0.875rem,1.3vw,1rem)">
                         Partner oficial de Siigo Aspel, Soft&#8209;Restaurant y Zoho One. Capacitación, implementación y soporte especializado en México.
                     </p>
-                    <div class="flex items-center gap-4 flex-wrap">
-                        <a href="{{ url('/productos') }}" class="inline-flex items-center gap-3 font-bold text-white rounded-2xl transition-all duration-200 hover:-translate-y-0.5"
-                           style="background:#E8500A;padding:0.9rem 1.75rem;font-size:0.875rem;box-shadow:0 8px 28px rgba(232,80,10,0.42)">
-                            Conoce nuestras soluciones
+                    <div class="flex items-center gap-4 flex-wrap mb-10">
+                        <a href="{{ url('/productos') }}" class="inline-flex items-center gap-2.5 font-bold text-white rounded-xl transition-all duration-200 hover:-translate-y-0.5"
+                           style="background:#E8500A;padding:0.85rem 1.6rem;font-size:0.875rem;box-shadow:0 6px 24px rgba(232,80,10,0.38)">
+                            Nuestras soluciones
                             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                         </a>
-                        <a href="{{ route('booking') }}" class="text-sm font-semibold text-white/45 hover:text-white/80 transition-colors underline underline-offset-4 decoration-white/20">
+                        <a href="{{ route('booking') }}" class="text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors">
                             Agendar sesión gratuita →
                         </a>
                     </div>
-                </div>
-                <div class="hidden lg:flex items-center justify-center relative shrink-0" style="width:360px;height:400px">
-                    <div class="absolute rounded-full blur-3xl opacity-12" style="width:240px;height:240px;background:#E8500A"></div>
-                    <div class="absolute rounded-full border" style="width:290px;height:290px;border-color:rgba(232,80,10,0.22);animation:lc-ring 4.5s ease-out infinite"></div>
-                    <div class="absolute rounded-full border" style="width:196px;height:196px;border-color:rgba(232,80,10,0.38);animation:lc-ring 4.5s ease-out infinite 1.8s"></div>
-                    <div class="relative flex items-center justify-center rounded-3xl" style="width:104px;height:104px;background:rgba(232,80,10,0.14);border:1px solid rgba(232,80,10,0.42);animation:lc-float 5s ease-in-out infinite">
-                        <span class="font-black text-4xl select-none" style="color:#E8500A">LC</span>
+                    <div class="flex items-center gap-6 pt-8 border-t border-gray-100">
+                        <div><p class="text-xl font-black text-gray-900">5000+</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Empresas</p></div>
+                        <div class="w-px h-8 bg-gray-100"></div>
+                        <div><p class="text-xl font-black text-gray-900">1,200+</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Graduados</p></div>
+                        <div class="w-px h-8 bg-gray-100"></div>
+                        <div><p class="text-xl font-black text-gray-900">25+</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Años exp.</p></div>
                     </div>
-                    <div class="absolute top-10 right-8 rounded-xl px-3 py-1.5 text-xs font-semibold" style="background:rgba(255,255,255,0.05);border:1px solid rgba(232,80,10,0.28);color:#E8500A;animation:lc-float 6s ease-in-out infinite 1s">500+ Empresas</div>
-                    <div class="absolute bottom-14 left-6 rounded-xl px-3 py-1.5 text-xs font-semibold" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.32);animation:lc-float 7s ease-in-out infinite 2s">12+ Años de experiencia</div>
+                </div>
+                <div class="hidden lg:flex items-center justify-center relative shrink-0" style="width:min(480px,44vw);height:min(460px,42vw)">
+                    <div class="absolute rounded-full" style="width:350px;height:350px;border:1.5px solid rgba(232,80,10,0.16);animation:lc-ring 5.5s ease-out infinite"></div>
+                    <div class="absolute rounded-full" style="width:240px;height:240px;border:2px solid rgba(232,80,10,0.28);animation:lc-ring 5.5s ease-out infinite 2.2s"></div>
+                    <div class="absolute rounded-full" style="width:130px;height:130px;background:rgba(232,80,10,0.06)"></div>
+                    <div class="relative flex items-center justify-center select-none"
+                         style="padding:1.1rem 2rem;border-radius:1.4rem;animation:lc-float 5s ease-in-out infinite;
+                                background:linear-gradient(160deg,rgba(255,255,255,0.92) 0%,rgba(232,80,10,0.1) 100%);
+                                border:1px solid rgba(232,80,10,0.32);
+                                box-shadow:0 24px 52px rgba(232,80,10,0.22),0 0 0 1px rgba(255,255,255,0.7) inset">
+                        <div class="text-center">
+                            <p class="font-black text-[1.15rem] leading-none tracking-tight" style="color:#E8500A">Logia</p>
+                            <p class="font-black text-sm leading-none tracking-tight mt-0.5" style="color:#1B4DB7">Consulting</p>
+                            <div class="h-px mt-2 mb-1.5 w-full" style="background:linear-gradient(90deg,transparent,rgba(232,80,10,0.3),transparent)"></div>
+                            <p class="text-[9px] font-bold uppercase tracking-[0.18em]" style="color:#E8500A;opacity:.5">Partner Oficial MX</p>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="top:26px;right:6px;animation:lc-card-r .5s ease-out .2s both,lc-float 5s ease-in-out infinite .72s">
+                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(232,80,10,0.15)">
+                            <p class="text-base font-black text-gray-900">5000+</p>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-wider whitespace-nowrap">Empresas atendidas</p>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="top:30px;left:6px;animation:lc-card-l .5s ease-out .38s both,lc-float 5.5s ease-in-out infinite .88s">
+                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
+                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#E8500A"></span>
+                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">Partner Oficial MX</span>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="bottom:105px;right:10px;animation:lc-card-r .5s ease-out .52s both,lc-float 4.5s ease-in-out infinite 1.02s">
+                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
+                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#10B981"></span>
+                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">Soporte certificado</span>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="bottom:42px;left:14px;animation:lc-card-u .5s ease-out .65s both,lc-float 6s ease-in-out infinite 1.15s">
+                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(0,0,0,0.07)">
+                            <p class="text-base font-black text-gray-900">1,200+</p>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-wider">Graduados</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -103,42 +153,79 @@
 
     {{-- ── SLIDE 1: Siigo Aspel — azul ───────────────────────────────────── --}}
     <div class="hero-slide" :class="c===1 ? 'hero-slide--active' : 'pointer-events-none'">
-        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 55% 70% at 72% 50%,rgba(27,77,183,0.18) 0%,transparent 70%)"></div>
+        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 45% 80% at 78% 50%,rgba(27,77,183,0.08) 0%,transparent 65%)"></div>
         <div class="container-brand w-full px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex items-center gap-8 lg:gap-14 py-20 lg:py-0">
+            <div class="flex items-center gap-8 lg:gap-12 py-16 lg:py-0">
                 <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2.5 mb-7">
-                        <span class="block w-1 h-6 rounded-full shrink-0" style="background:#1B4DB7"></span>
-                        <span class="text-[11px] font-bold tracking-[0.2em] uppercase" style="color:#3B6FE0">Siigo Aspel</span>
+                    <div class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 mb-7" style="background:rgba(27,77,183,0.09)">
+                        <span class="w-1.5 h-1.5 rounded-full" style="background:#1B4DB7"></span>
+                        <span class="text-[11px] font-bold tracking-[0.18em] uppercase" style="color:#1B4DB7">Siigo Aspel</span>
                     </div>
-                    <h1 class="font-black text-white tracking-tight mb-6 leading-[0.93]" style="font-size:clamp(2.8rem,6.5vw,5.2rem)">
+                    <h1 class="font-black text-gray-900 tracking-tight mb-5 leading-[0.93]" style="font-size:clamp(2.5rem,5.8vw,4.8rem)">
                         Contabilidad<br>
-                        <span style="color:#3B6FE0">sin límites</span><br>
+                        <span style="color:#1B4DB7">sin límites</span><br>
                         para tu PYME.
                     </h1>
-                    <p class="text-white/50 leading-relaxed mb-9 max-w-md" style="font-size:clamp(0.875rem,1.4vw,1.05rem)">
+                    <p class="text-gray-500 leading-relaxed mb-8 max-w-md" style="font-size:clamp(0.875rem,1.3vw,1rem)">
                         SAE, COI, NOI, CAJA, FACTURE, BANCO — el ecosistema Aspel completo con implementación y soporte certificado.
                     </p>
-                    <div class="flex items-center gap-4 flex-wrap">
-                        <a href="{{ url('/productos/siigo-aspel') }}" class="inline-flex items-center gap-3 font-bold text-white rounded-2xl transition-all duration-200 hover:-translate-y-0.5"
-                           style="background:#1B4DB7;padding:0.9rem 1.75rem;font-size:0.875rem;box-shadow:0 8px 28px rgba(27,77,183,0.45)">
+                    <div class="flex items-center gap-4 flex-wrap mb-10">
+                        <a href="{{ url('/productos/siigo-aspel') }}" class="inline-flex items-center gap-2.5 font-bold text-white rounded-xl transition-all duration-200 hover:-translate-y-0.5"
+                           style="background:#1B4DB7;padding:0.85rem 1.6rem;font-size:0.875rem;box-shadow:0 6px 24px rgba(27,77,183,0.38)">
                             Ver productos Siigo
                             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                         </a>
-                        <a href="{{ route('booking') }}" class="text-sm font-semibold text-white/45 hover:text-white/80 transition-colors underline underline-offset-4 decoration-white/20">
+                        <a href="{{ route('booking') }}" class="text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors">
                             Solicitar demo →
                         </a>
                     </div>
-                </div>
-                <div class="hidden lg:flex items-center justify-center relative shrink-0" style="width:360px;height:400px">
-                    <div class="absolute rounded-full blur-3xl opacity-12" style="width:240px;height:240px;background:#1B4DB7"></div>
-                    <div class="absolute rounded-full border" style="width:290px;height:290px;border-color:rgba(27,77,183,0.22);animation:lc-ring 4.5s ease-out infinite"></div>
-                    <div class="absolute rounded-full border" style="width:196px;height:196px;border-color:rgba(27,77,183,0.38);animation:lc-ring 4.5s ease-out infinite 1.8s"></div>
-                    <div class="relative flex items-center justify-center rounded-3xl" style="width:104px;height:104px;background:rgba(27,77,183,0.14);border:1px solid rgba(27,77,183,0.42);animation:lc-float 5s ease-in-out infinite">
-                        <span class="font-black text-4xl select-none" style="color:#3B6FE0">SA</span>
+                    <div class="flex items-center gap-6 pt-8 border-t border-gray-100">
+                        <div><p class="text-xl font-black text-gray-900">6</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Productos</p></div>
+                        <div class="w-px h-8 bg-gray-100"></div>
+                        <div><p class="text-xl font-black text-gray-900">CFDI 4.0</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Compatible</p></div>
+                        <div class="w-px h-8 bg-gray-100"></div>
+                        <div><p class="text-xl font-black text-gray-900">#1</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">En México</p></div>
                     </div>
-                    <div class="absolute top-10 right-8 rounded-xl px-3 py-1.5 text-xs font-semibold" style="background:rgba(255,255,255,0.05);border:1px solid rgba(27,77,183,0.28);color:#3B6FE0;animation:lc-float 6s ease-in-out infinite 1s">SAE · COI · NOI · BANCO</div>
-                    <div class="absolute bottom-14 left-6 rounded-xl px-3 py-1.5 text-xs font-semibold" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.32);animation:lc-float 7s ease-in-out infinite 2s">Licencias Oficiales MX</div>
+                </div>
+                <div class="hidden lg:flex items-center justify-center relative shrink-0" style="width:min(480px,44vw);height:min(460px,42vw)">
+                    <div class="absolute rounded-full" style="width:350px;height:350px;border:1.5px solid rgba(27,77,183,0.16);animation:lc-ring 5.5s ease-out infinite"></div>
+                    <div class="absolute rounded-full" style="width:240px;height:240px;border:2px solid rgba(27,77,183,0.28);animation:lc-ring 5.5s ease-out infinite 2.2s"></div>
+                    <div class="absolute rounded-full" style="width:130px;height:130px;background:rgba(27,77,183,0.06)"></div>
+                    <div class="relative flex items-center justify-center select-none"
+                         style="padding:1.1rem 2.2rem;border-radius:1.4rem;animation:lc-float 5s ease-in-out infinite;
+                                background:linear-gradient(160deg,rgba(255,255,255,0.92) 0%,rgba(27,77,183,0.1) 100%);
+                                border:1px solid rgba(27,77,183,0.32);
+                                box-shadow:0 24px 52px rgba(27,77,183,0.22),0 0 0 1px rgba(255,255,255,0.7) inset">
+                        <div class="text-center">
+                            <p class="font-black text-2xl leading-none tracking-tight" style="color:#1B4DB7">SIIGO</p>
+                            <div class="h-px mt-2 mb-1.5 w-full" style="background:linear-gradient(90deg,transparent,rgba(27,77,183,0.3),transparent)"></div>
+                            <p class="text-[9px] font-bold uppercase tracking-[0.18em]" style="color:#1B4DB7;opacity:.5">Aspel · México</p>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="top:26px;right:6px;animation:lc-card-r .5s ease-out .2s both,lc-float 5s ease-in-out infinite .72s">
+                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(27,77,183,0.15)">
+                            <p class="text-base font-black" style="color:#1B4DB7">CFDI 4.0</p>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-wider whitespace-nowrap">Facturación electrónica</p>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="top:30px;left:6px;animation:lc-card-l .5s ease-out .38s both,lc-float 5.5s ease-in-out infinite .88s">
+                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
+                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#1B4DB7"></span>
+                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">SAE · COI · NOI · BANCO</span>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="bottom:105px;right:10px;animation:lc-card-r .5s ease-out .52s both,lc-float 4.5s ease-in-out infinite 1.02s">
+                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
+                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#10B981"></span>
+                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">Licencias oficiales</span>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="bottom:42px;left:14px;animation:lc-card-u .5s ease-out .65s both,lc-float 6s ease-in-out infinite 1.15s">
+                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(0,0,0,0.07)">
+                            <p class="text-base font-black text-gray-900">IMSS · SAT</p>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-wider">Integrado</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -146,42 +233,79 @@
 
     {{-- ── SLIDE 2: Soft-Restaurant — naranja ────────────────────────────── --}}
     <div class="hero-slide" :class="c===2 ? 'hero-slide--active' : 'pointer-events-none'">
-        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 55% 70% at 72% 50%,rgba(232,80,10,0.15) 0%,transparent 70%)"></div>
+        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 45% 80% at 78% 50%,rgba(232,80,10,0.08) 0%,transparent 65%)"></div>
         <div class="container-brand w-full px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex items-center gap-8 lg:gap-14 py-20 lg:py-0">
+            <div class="flex items-center gap-8 lg:gap-12 py-16 lg:py-0">
                 <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2.5 mb-7">
-                        <span class="block w-1 h-6 rounded-full shrink-0" style="background:#E8500A"></span>
-                        <span class="text-[11px] font-bold tracking-[0.2em] uppercase" style="color:#E8500A">Soft-Restaurant</span>
+                    <div class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 mb-7" style="background:rgba(232,80,10,0.1)">
+                        <span class="w-1.5 h-1.5 rounded-full" style="background:#E8500A"></span>
+                        <span class="text-[11px] font-bold tracking-[0.18em] uppercase" style="color:#E8500A">Soft-Restaurant</span>
                     </div>
-                    <h1 class="font-black text-white tracking-tight mb-6 leading-[0.93]" style="font-size:clamp(2.8rem,6.5vw,5.2rem)">
+                    <h1 class="font-black text-gray-900 tracking-tight mb-5 leading-[0.93]" style="font-size:clamp(2.5rem,5.8vw,4.8rem)">
                         Tu restaurante,<br>
                         siempre en<br>
                         <span style="color:#E8500A">control.</span>
                     </h1>
-                    <p class="text-white/50 leading-relaxed mb-9 max-w-md" style="font-size:clamp(0.875rem,1.4vw,1.05rem)">
+                    <p class="text-gray-500 leading-relaxed mb-8 max-w-md" style="font-size:clamp(0.875rem,1.3vw,1rem)">
                         Sistema integral de punto de venta, cocina, inventarios y reportes para Food &amp; Beverage en México.
                     </p>
-                    <div class="flex items-center gap-4 flex-wrap">
-                        <a href="{{ url('/productos/soft-restaurant') }}" class="inline-flex items-center gap-3 font-bold text-white rounded-2xl transition-all duration-200 hover:-translate-y-0.5"
-                           style="background:linear-gradient(135deg,#C44508,#E8500A);padding:0.9rem 1.75rem;font-size:0.875rem;box-shadow:0 8px 28px rgba(232,80,10,0.42)">
+                    <div class="flex items-center gap-4 flex-wrap mb-10">
+                        <a href="{{ url('/productos/soft-restaurant') }}" class="inline-flex items-center gap-2.5 font-bold text-white rounded-xl transition-all duration-200 hover:-translate-y-0.5"
+                           style="background:linear-gradient(135deg,#C44508,#E8500A);padding:0.85rem 1.6rem;font-size:0.875rem;box-shadow:0 6px 24px rgba(232,80,10,0.38)">
                             Explorar Soft-Restaurant
                             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                         </a>
-                        <a href="{{ route('booking') }}" class="text-sm font-semibold text-white/45 hover:text-white/80 transition-colors underline underline-offset-4 decoration-white/20">
+                        <a href="{{ route('booking') }}" class="text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors">
                             Solicitar demo →
                         </a>
                     </div>
-                </div>
-                <div class="hidden lg:flex items-center justify-center relative shrink-0" style="width:360px;height:400px">
-                    <div class="absolute rounded-full blur-3xl opacity-12" style="width:240px;height:240px;background:#E8500A"></div>
-                    <div class="absolute rounded-full border" style="width:290px;height:290px;border-color:rgba(232,80,10,0.22);animation:lc-ring 4.5s ease-out infinite"></div>
-                    <div class="absolute rounded-full border" style="width:196px;height:196px;border-color:rgba(232,80,10,0.38);animation:lc-ring 4.5s ease-out infinite 1.8s"></div>
-                    <div class="relative flex items-center justify-center rounded-3xl" style="width:104px;height:104px;background:rgba(232,80,10,0.14);border:1px solid rgba(232,80,10,0.42);animation:lc-float 5s ease-in-out infinite">
-                        <span class="font-black text-4xl select-none" style="color:#E8500A">SR</span>
+                    <div class="flex items-center gap-6 pt-8 border-t border-gray-100">
+                        <div><p class="text-xl font-black text-gray-900">POS</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Táctil</p></div>
+                        <div class="w-px h-8 bg-gray-100"></div>
+                        <div><p class="text-xl font-black text-gray-900">F&amp;B</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Especializado</p></div>
+                        <div class="w-px h-8 bg-gray-100"></div>
+                        <div><p class="text-xl font-black text-gray-900">Inv.</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Tiempo real</p></div>
                     </div>
-                    <div class="absolute top-10 right-8 rounded-xl px-3 py-1.5 text-xs font-semibold" style="background:rgba(255,255,255,0.05);border:1px solid rgba(232,80,10,0.28);color:#E8500A;animation:lc-float 6s ease-in-out infinite 1s">POS · Cocina · Inventarios</div>
-                    <div class="absolute bottom-14 left-6 rounded-xl px-3 py-1.5 text-xs font-semibold" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.32);animation:lc-float 7s ease-in-out infinite 2s">F&amp;B Especializado</div>
+                </div>
+                <div class="hidden lg:flex items-center justify-center relative shrink-0" style="width:min(480px,44vw);height:min(460px,42vw)">
+                    <div class="absolute rounded-full" style="width:350px;height:350px;border:1.5px solid rgba(232,80,10,0.16);animation:lc-ring 5.5s ease-out infinite"></div>
+                    <div class="absolute rounded-full" style="width:240px;height:240px;border:2px solid rgba(232,80,10,0.28);animation:lc-ring 5.5s ease-out infinite 2.2s"></div>
+                    <div class="absolute rounded-full" style="width:130px;height:130px;background:rgba(232,80,10,0.06)"></div>
+                    <div class="relative flex items-center justify-center select-none"
+                         style="padding:1.1rem 1.6rem;border-radius:1.4rem;animation:lc-float 5s ease-in-out infinite;
+                                background:linear-gradient(160deg,rgba(255,255,255,0.92) 0%,rgba(232,80,10,0.1) 100%);
+                                border:1px solid rgba(232,80,10,0.32);
+                                box-shadow:0 24px 52px rgba(232,80,10,0.22),0 0 0 1px rgba(255,255,255,0.7) inset">
+                        <div class="text-center">
+                            <p class="font-black text-[1.05rem] leading-none tracking-tight" style="color:#E8500A">Soft-Restaurant</p>
+                            <div class="h-px mt-2 mb-1.5 w-full" style="background:linear-gradient(90deg,transparent,rgba(232,80,10,0.3),transparent)"></div>
+                            <p class="text-[9px] font-bold uppercase tracking-[0.18em]" style="color:#E8500A;opacity:.5">Sistema F&amp;B</p>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="top:26px;right:6px;animation:lc-card-r .5s ease-out .2s both,lc-float 5s ease-in-out infinite .72s">
+                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(232,80,10,0.15)">
+                            <p class="text-base font-black" style="color:#E8500A">POS Táctil</p>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-wider whitespace-nowrap">Punto de venta</p>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="top:30px;left:6px;animation:lc-card-l .5s ease-out .38s both,lc-float 5.5s ease-in-out infinite .88s">
+                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
+                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#E8500A"></span>
+                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">Control de cocina</span>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="bottom:105px;right:10px;animation:lc-card-r .5s ease-out .52s both,lc-float 4.5s ease-in-out infinite 1.02s">
+                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
+                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#10B981"></span>
+                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">Reportes F&amp;B</span>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="bottom:42px;left:14px;animation:lc-card-u .5s ease-out .65s both,lc-float 6s ease-in-out infinite 1.15s">
+                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(0,0,0,0.07)">
+                            <p class="text-base font-black text-gray-900">Inventarios</p>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-wider">Tiempo real</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -189,81 +313,105 @@
 
     {{-- ── SLIDE 3: Zoho One — rojo ───────────────────────────────────────── --}}
     <div class="hero-slide" :class="c===3 ? 'hero-slide--active' : 'pointer-events-none'">
-        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 55% 70% at 72% 50%,rgba(200,32,44,0.16) 0%,transparent 70%)"></div>
+        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 45% 80% at 78% 50%,rgba(200,32,44,0.08) 0%,transparent 65%)"></div>
         <div class="container-brand w-full px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex items-center gap-8 lg:gap-14 py-20 lg:py-0">
+            <div class="flex items-center gap-8 lg:gap-12 py-16 lg:py-0">
                 <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2.5 mb-7">
-                        <span class="block w-1 h-6 rounded-full shrink-0" style="background:#C8202C"></span>
-                        <span class="text-[11px] font-bold tracking-[0.2em] uppercase" style="color:#E8404C">Zoho One</span>
+                    <div class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 mb-7" style="background:rgba(200,32,44,0.09)">
+                        <span class="w-1.5 h-1.5 rounded-full" style="background:#C8202C"></span>
+                        <span class="text-[11px] font-bold tracking-[0.18em] uppercase" style="color:#C8202C">Zoho One</span>
                     </div>
-                    <h1 class="font-black text-white tracking-tight mb-6 leading-[0.93]" style="font-size:clamp(2.8rem,6.5vw,5.2rem)">
+                    <h1 class="font-black text-gray-900 tracking-tight mb-5 leading-[0.93]" style="font-size:clamp(2.5rem,5.8vw,4.8rem)">
                         40+ apps.<br>
                         Una sola<br>
-                        <span style="color:#E8404C">suscripción.</span>
+                        <span style="color:#C8202C">suscripción.</span>
                     </h1>
-                    <p class="text-white/50 leading-relaxed mb-9 max-w-md" style="font-size:clamp(0.875rem,1.4vw,1.05rem)">
+                    <p class="text-gray-500 leading-relaxed mb-8 max-w-md" style="font-size:clamp(0.875rem,1.3vw,1rem)">
                         CRM, Contabilidad, RRHH, Proyectos y más — toda la suite empresarial Zoho en un partner de confianza.
                     </p>
-                    <div class="flex items-center gap-4 flex-wrap">
-                        <a href="{{ url('/productos/zoho-one') }}" class="inline-flex items-center gap-3 font-bold text-white rounded-2xl transition-all duration-200 hover:-translate-y-0.5"
-                           style="background:linear-gradient(135deg,#A81A25,#C8202C);padding:0.9rem 1.75rem;font-size:0.875rem;box-shadow:0 8px 28px rgba(200,32,44,0.45)">
+                    <div class="flex items-center gap-4 flex-wrap mb-10">
+                        <a href="{{ url('/productos/zoho-one') }}" class="inline-flex items-center gap-2.5 font-bold text-white rounded-xl transition-all duration-200 hover:-translate-y-0.5"
+                           style="background:linear-gradient(135deg,#A81A25,#C8202C);padding:0.85rem 1.6rem;font-size:0.875rem;box-shadow:0 6px 24px rgba(200,32,44,0.38)">
                             Explorar Zoho One
                             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                         </a>
-                        <a href="{{ route('booking') }}" class="text-sm font-semibold text-white/45 hover:text-white/80 transition-colors underline underline-offset-4 decoration-white/20">
+                        <a href="{{ route('booking') }}" class="text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors">
                             Solicitar demo →
                         </a>
                     </div>
-                </div>
-                <div class="hidden lg:flex items-center justify-center relative shrink-0" style="width:360px;height:400px">
-                    <div class="absolute rounded-full blur-3xl opacity-12" style="width:240px;height:240px;background:#C8202C"></div>
-                    <div class="absolute rounded-full border" style="width:290px;height:290px;border-color:rgba(200,32,44,0.22);animation:lc-ring 4.5s ease-out infinite"></div>
-                    <div class="absolute rounded-full border" style="width:196px;height:196px;border-color:rgba(200,32,44,0.38);animation:lc-ring 4.5s ease-out infinite 1.8s"></div>
-                    <div class="relative flex items-center justify-center rounded-3xl" style="width:104px;height:104px;background:rgba(200,32,44,0.14);border:1px solid rgba(200,32,44,0.42);animation:lc-float 5s ease-in-out infinite">
-                        <span class="font-black text-4xl select-none" style="color:#E8404C">ZO</span>
+                    <div class="flex items-center gap-6 pt-8 border-t border-gray-100">
+                        <div><p class="text-xl font-black text-gray-900">40+</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Apps</p></div>
+                        <div class="w-px h-8 bg-gray-100"></div>
+                        <div><p class="text-xl font-black text-gray-900">1 solo</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Precio</p></div>
+                        <div class="w-px h-8 bg-gray-100"></div>
+                        <div><p class="text-xl font-black text-gray-900">MX</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Partner oficial</p></div>
                     </div>
-                    <div class="absolute top-10 right-8 rounded-xl px-3 py-1.5 text-xs font-semibold" style="background:rgba(255,255,255,0.05);border:1px solid rgba(200,32,44,0.28);color:#E8404C;animation:lc-float 6s ease-in-out infinite 1s">40+ Apps integradas</div>
-                    <div class="absolute bottom-14 left-6 rounded-xl px-3 py-1.5 text-xs font-semibold" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.32);animation:lc-float 7s ease-in-out infinite 2s">CRM · HR · Books · Projects</div>
+                </div>
+                <div class="hidden lg:flex items-center justify-center relative shrink-0" style="width:min(480px,44vw);height:min(460px,42vw)">
+                    <div class="absolute rounded-full" style="width:350px;height:350px;border:1.5px solid rgba(200,32,44,0.16);animation:lc-ring 5.5s ease-out infinite"></div>
+                    <div class="absolute rounded-full" style="width:240px;height:240px;border:2px solid rgba(200,32,44,0.28);animation:lc-ring 5.5s ease-out infinite 2.2s"></div>
+                    <div class="absolute rounded-full" style="width:130px;height:130px;background:rgba(200,32,44,0.06)"></div>
+                    <div class="relative flex items-center justify-center select-none"
+                         style="padding:1.1rem 2.2rem;border-radius:1.4rem;animation:lc-float 5s ease-in-out infinite;
+                                background:linear-gradient(160deg,rgba(255,255,255,0.92) 0%,rgba(200,32,44,0.1) 100%);
+                                border:1px solid rgba(200,32,44,0.32);
+                                box-shadow:0 24px 52px rgba(200,32,44,0.22),0 0 0 1px rgba(255,255,255,0.7) inset">
+                        <div class="text-center">
+                            <p class="font-black text-2xl leading-none tracking-tight" style="color:#C8202C">Zoho One</p>
+                            <div class="h-px mt-2 mb-1.5 w-full" style="background:linear-gradient(90deg,transparent,rgba(200,32,44,0.3),transparent)"></div>
+                            <p class="text-[9px] font-bold uppercase tracking-[0.18em]" style="color:#C8202C;opacity:.5">Suite · 40+ Apps</p>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="top:26px;right:6px;animation:lc-card-r .5s ease-out .2s both,lc-float 5s ease-in-out infinite .72s">
+                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(200,32,44,0.15)">
+                            <p class="text-base font-black" style="color:#C8202C">40+ Apps</p>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-wider whitespace-nowrap">Integradas</p>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="top:30px;left:6px;animation:lc-card-l .5s ease-out .38s both,lc-float 5.5s ease-in-out infinite .88s">
+                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
+                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#C8202C"></span>
+                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">CRM · HR · Books</span>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="bottom:105px;right:10px;animation:lc-card-r .5s ease-out .52s both,lc-float 4.5s ease-in-out infinite 1.02s">
+                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
+                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#10B981"></span>
+                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">Suite completa</span>
+                        </div>
+                    </div>
+                    <div class="hero-card absolute" style="bottom:42px;left:14px;animation:lc-card-u .5s ease-out .65s both,lc-float 6s ease-in-out infinite 1.15s">
+                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(0,0,0,0.07)">
+                            <p class="text-base font-black text-gray-900">Analytics</p>
+                            <p class="text-[10px] text-gray-400 uppercase tracking-wider">+ Projects + Desk</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- ── STATS BAR — persistente en todos los slides ────────────────────── --}}
-    <div class="absolute bottom-[72px] left-0 right-0 z-20 border-y border-white/8 pointer-events-none" style="background:rgba(8,15,30,0.75);backdrop-filter:blur(8px)">
-        <div class="container-brand px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-center sm:justify-around gap-x-8 gap-y-3">
-            <div class="text-center"><p class="text-2xl font-extrabold text-white">500+</p><p class="text-[10px] text-white/35 mt-0.5 uppercase tracking-widest">Empresas</p></div>
-            <div class="w-px h-8 bg-white/10 hidden sm:block"></div>
-            <div class="text-center"><p class="text-2xl font-extrabold text-white">1,200+</p><p class="text-[10px] text-white/35 mt-0.5 uppercase tracking-widest">Graduados</p></div>
-            <div class="w-px h-8 bg-white/10 hidden sm:block"></div>
-            <div class="text-center"><p class="text-2xl font-extrabold text-white">3</p><p class="text-[10px] text-white/35 mt-0.5 uppercase tracking-widest">Certificaciones</p></div>
-            <div class="w-px h-8 bg-white/10 hidden sm:block"></div>
-            <div class="text-center"><p class="text-2xl font-extrabold text-white">12+</p><p class="text-[10px] text-white/35 mt-0.5 uppercase tracking-widest">Años</p></div>
-        </div>
-    </div>
-
-    {{-- ── DOTS + FLECHAS — navegación ────────────────────────────────────── --}}
+    {{-- ── DOTS + FLECHAS ─────────────────────────────────────────────────── --}}
     <div class="absolute bottom-6 left-0 right-0 z-20 flex items-center justify-center gap-3">
-        <button @click="prev()" class="p-1.5 rounded-full hover:bg-white/10 transition-colors" aria-label="Anterior">
-            <svg class="w-4 h-4 text-white/35 hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <button @click="prev()" class="p-1.5 rounded-full hover:bg-black/5 transition-colors" aria-label="Anterior">
+            <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </button>
         <template x-for="i in 4" :key="i">
             <button @click="go(i-1)"
                     class="rounded-full transition-all duration-500"
-                    :class="c === i-1 ? 'w-7 h-2 bg-white' : 'w-2 h-2 bg-white/25 hover:bg-white/50'"
+                    :class="c === i-1 ? 'w-7 h-2 bg-gray-800' : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'"
                     :aria-label="'Slide ' + i"></button>
         </template>
-        <button @click="next()" class="p-1.5 rounded-full hover:bg-white/10 transition-colors" aria-label="Siguiente">
-            <svg class="w-4 h-4 text-white/35 hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <button @click="next()" class="p-1.5 rounded-full hover:bg-black/5 transition-colors" aria-label="Siguiente">
+            <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
     </div>
 
-    {{-- ── CONTADOR — top right ─────────────────────────────────────────── --}}
+    {{-- ── CONTADOR ──────────────────────────────────────────────────────── --}}
     <div class="absolute top-6 right-6 z-20 hidden lg:flex items-baseline gap-1 font-mono" aria-hidden="true">
-        <span class="text-white/70 text-sm font-bold" x-text="String(c+1).padStart(2,'0')"></span>
-        <span class="text-white/20 text-xs">/</span>
-        <span class="text-white/20 text-xs">04</span>
+        <span class="text-gray-700 text-sm font-bold" x-text="String(c+1).padStart(2,'0')"></span>
+        <span class="text-gray-200 text-xs">/</span>
+        <span class="text-gray-200 text-xs">04</span>
     </div>
 
 </section>
@@ -279,8 +427,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
             {{-- Siigo Aspel --}}
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow duration-300">
-                <div class="h-1.5 w-full" style="background:linear-gradient(90deg,#1B4DB7,#3B6FE0)"></div>
+            <div class="card-hover-siigo bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col">
                 <div class="p-7 flex flex-col flex-1">
                     <div class="inline-flex items-center gap-2 mb-4">
                         <span class="w-2.5 h-2.5 rounded-full" style="background:#1B4DB7"></span>
@@ -303,8 +450,7 @@
             </div>
 
             {{-- Soft-Restaurant --}}
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow duration-300">
-                <div class="h-1.5 w-full" style="background:linear-gradient(90deg,#C44508,#E8500A)"></div>
+            <div class="card-hover-soft bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col">
                 <div class="p-7 flex flex-col flex-1">
                     <div class="inline-flex items-center gap-2 mb-4">
                         <span class="w-2.5 h-2.5 rounded-full" style="background:#E8500A"></span>
@@ -327,8 +473,7 @@
             </div>
 
             {{-- Zoho One --}}
-            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow duration-300">
-                <div class="h-1.5 w-full" style="background:linear-gradient(90deg,#A81A25,#C8202C)"></div>
+            <div class="card-hover-zoho bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col">
                 <div class="p-7 flex flex-col flex-1">
                     <div class="inline-flex items-center gap-2 mb-4">
                         <span class="w-2.5 h-2.5 rounded-full" style="background:#C8202C"></span>

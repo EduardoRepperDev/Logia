@@ -3,11 +3,8 @@
         <div class="flex items-center justify-between h-[72px]">
 
             {{-- Logo --}}
-            <a href="{{ route('home') }}" class="flex items-center gap-3 shrink-0 group">
-                <div class="w-9 h-9 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105" style="background: linear-gradient(135deg,#1B4DB7,#3B6FE0)">
-                    <span class="text-white font-bold text-sm leading-none">LC</span>
-                </div>
-                <span class="text-[15px] font-bold tracking-tight text-gray-900">Logia <span class="text-[#1B4DB7]">Consulting</span></span>
+            <a href="{{ route('home') }}" class="flex items-center shrink-0 group">
+                <img src="{{ asset('images/logo.png') }}" alt="Logia Consulting" class="h-10 w-auto transition-transform group-hover:scale-105" />
             </a>
 
             {{-- Nav Desktop --}}
