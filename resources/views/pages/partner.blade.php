@@ -67,20 +67,46 @@
 </section>
 
 {{-- ══ PRODUCTOS ════════════════════════════════════════════════════════════════ --}}
-<section class="featured" style="background:var(--bg)">
+@php
+$hasCategorias = $brand === 'aspel' && collect($data['productos'])->first(fn($p) => !empty($p['categoria']));
+$categorias    = $hasCategorias
+    ? ['Todos'] + collect($data['productos'])->pluck('categoria')->unique()->sort()->values()->toArray()
+    : [];
+@endphp
+
+<section class="featured" style="background:var(--bg)"
+         @if($hasCategorias) x-data="{ catTab: 'Todos' }" @endif>
     <div class="container">
         <div class="featured__head">
             <div>
                 <span class="eyebrow">Productos {{ $data['name'] }}</span>
                 <h2 style="margin-top:16px">Licenciamiento, implementación y soporte — todo por Logia.</h2>
             </div>
+
+            @if($hasCategorias)
+            <div class="cat-tabs" role="tablist" aria-label="Categoría de productos">
+                @foreach($categorias as $cat)
+                <button type="button"
+                        class="cat-tab"
+                        :class="{ 'is-active': catTab === '{{ $cat }}' }"
+                        @click="catTab = '{{ $cat }}'"
+                        :aria-pressed="catTab === '{{ $cat }}' ? 'true' : 'false'">
+                    {{ $cat }}
+                </button>
+                @endforeach
+            </div>
+            @endif
         </div>
+
         <div class="featured__grid">
             @foreach($data['productos'] as $p)
             <article class="product3d" data-brand="{{ $brand }}"
                      x-data="product3dCard()"
                      @pointermove="onMove"
-                     @pointerleave="onLeave">
+                     @pointerleave="onLeave"
+                     @if($hasCategorias)
+                     :class="{ 'hero-slide--hidden': catTab !== 'Todos' && catTab !== '{{ $p['categoria'] ?? '' }}' }"
+                     @endif>
                 <div class="product3d__inner" x-ref="inner">
                     <header class="product3d__header">
                         <span class="product3d__brand-chip"

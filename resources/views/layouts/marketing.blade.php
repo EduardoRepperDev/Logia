@@ -36,7 +36,7 @@
             <button class="c-navbar__menu-item"
                     @click="megaOpen = !megaOpen"
                     :aria-expanded="megaOpen.toString()">
-                Productos
+                Soluciones
                 <svg viewBox="0 0 12 12" aria-hidden="true">
                     <path d="M2 4 L6 8 L10 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
