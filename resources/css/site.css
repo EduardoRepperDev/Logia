@@ -1601,3 +1601,55 @@ button { font: inherit; }
   display: block;
 }
 .mega__brand-chip img { pointer-events: none; }
+
+/* ======================================================================
+   SERVICE STRIP — compact horizontal banner (replaces tall service cards)
+   ====================================================================== */
+.service-strip {
+  padding: 44px 0;
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.service-strip__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+@media (max-width: 960px) { .service-strip__grid { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
+@media (max-width: 540px) { .service-strip__grid { grid-template-columns: 1fr; } }
+.service-strip__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.service-strip__icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  transition: background 600ms ease, color 600ms ease;
+}
+.service-strip__title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2A2A2A;
+  line-height: 1.25;
+  margin-bottom: 4px;
+  font-family: var(--font-display);
+}
+.service-strip__body {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.service-strip__meta {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary);
+  transition: color 600ms ease;
+}

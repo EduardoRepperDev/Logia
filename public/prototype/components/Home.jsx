@@ -67,7 +67,7 @@ const HomeLogia = ({ onNavigate, cardVariant }) => {
       dotLabel: "Zoho One" },
     { key: "campus",
       eyebrow: "Campus Logia · Cursos certificados DC-3",
-      titleA: "Tu equipo, certif", titleEm: "icado", titleB: " — sin salir de la oficina.",
+      titleA: "Tu equipo, ", titleEm: "certificado", titleB: "  sin salir de la oficina.",
       lede: "Aula virtual con DRM, constancia STPS DC-3 y rutas por rol: contador, administrador, gerente de restaurante o IT manager. Desde $990 por curso.",
       ctaA: { label: "Explorar Campus" },
       ctaB: { label: "Ver catálogo de cursos" },
@@ -292,14 +292,25 @@ const HomeLogia = ({ onNavigate, cardVariant }) => {
       {/* CERTIFICACIONES */}
       <section className="certs">
         <div className="container">
-          <span className="eyebrow">Certificaciones y partnerships oficiales</span>
-          <h2 style={{marginTop: 16}}>Certificados por los fabricantes que vendemos e implementamos.</h2>
-          <div className="certs__row">
-            <div className="cert-badge"><strong>Siigo Aspel</strong>Partner Gold · 2012-2026</div>
-            <div className="cert-badge"><strong>Soft Restaurant</strong>Distribuidor autorizado · 2015-2026</div>
-            <div className="cert-badge"><strong>Zoho One</strong>Authorized Partner · 2019-2026</div>
-            <div className="cert-badge"><strong>Microsoft</strong>Solutions Partner · 2021-2026</div>
-            <div className="cert-badge"><strong>STPS DC-3</strong>Agente capacitador externo</div>
+          <div style={{textAlign: "center", marginBottom: 32}}>
+            <span className="eyebrow">Partners oficiales autorizados</span>
+            <h2 style={{marginTop: 16}}>4 marcas líderes bajo un solo proveedor certificado.</h2>
+          </div>
+          <div className="certs__row" style={{gridTemplateColumns: "repeat(4, 1fr)"}}>
+            {[
+              {name: "Siigo Aspel",     logo: "/images/brands/siigo.png",                              tag: "Partner autorizado"},
+              {name: "Soft Restaurant", logo: "/images/brands/softrestauran.png",                      tag: "Partner autorizado"},
+              {name: "Zoho",            logo: "/images/brands/zoho-logo-web.svg",                      tag: "Partner autorizado"},
+              {name: "Microsoft 365",   logo: "/images/brands/microsoft%20365%20compact%20logo.png",   tag: "Solutions Partner"},
+            ].map(b => (
+              <div key={b.name} className="cert-badge" style={{padding: 24, background: "#fff", border: "1px solid var(--border)", alignItems: "center"}}>
+                <img src={b.logo} alt={b.name}
+                     style={{height: 48, width: "auto", maxWidth: "100%", objectFit: "contain", marginBottom: 12}}
+                     onError={e => { e.target.style.display="none"; }}/>
+                <strong>{b.name}</strong>
+                <span>{b.tag}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>

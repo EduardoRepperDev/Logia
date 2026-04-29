@@ -1,696 +1,473 @@
-@extends('layouts.app')
+@extends('layouts.marketing')
 
-@section('title', 'Logia Consulting — Partner Siigo Aspel, Soft-Restaurant y Zoho One en México')
-@section('meta_description', 'Capacitación certificada y consultoría en Siigo Aspel, Soft Restaurant y Zoho One. Cursos online, virtuales y presenciales con instructores certificados en México.')
-@section('theme_class', '')
-@section('robots', 'index,follow')
+@section('title', 'Integramos tecnología y crecimiento para tu negocio')
+@section('meta_description', 'Partner oficial de Siigo Aspel, Soft Restaurant y Zoho One en México. Implementación, capacitación y soporte certificado.')
 @section('og_title', 'Logia Consulting — Partner oficial en México')
-@section('og_description', 'Capacítate con los mejores en Siigo, Soft Restaurant y Zoho One. Certificaciones, consultoría y soporte para tu empresa.')
 
-@push('styles')
-<link rel="canonical" href="{{ url('/') }}">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Logia Consulting",
-  "url": "{{ url('/') }}",
-  "logo": "{{ asset('images/logo.png') }}",
-  "description": "Partner oficial de Siigo Aspel, Soft Restaurant y Zoho One en México. Capacitación certificada y consultoría empresarial.",
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": "+52-55-1234-5678",
-    "contactType": "customer service",
-    "areaServed": "MX",
-    "availableLanguage": "Spanish"
-  },
-  "sameAs": [
-    "https://www.facebook.com/logiaconsulting",
-    "https://www.linkedin.com/company/logiaconsulting",
-    "https://www.instagram.com/logiaconsulting"
-  ]
-}
-</script>
-<style>
-/* Hero carousel */
-.hero-slide{position:absolute;inset:0;display:flex;align-items:center;opacity:0;transform:translateY(12px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
-.hero-slide--active{opacity:1;transform:translateY(0);z-index:2}
-@keyframes lc-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-@keyframes lc-ring{0%{transform:scale(.85);opacity:.5}100%{transform:scale(1.9);opacity:0}}
-@keyframes lc-card-r{from{transform:translateX(52px);opacity:0}to{transform:translateX(0);opacity:1}}
-@keyframes lc-card-l{from{transform:translateX(-52px);opacity:0}to{transform:translateX(0);opacity:1}}
-@keyframes lc-card-u{from{transform:translateY(38px);opacity:0}to{transform:translateY(0);opacity:1}}
-@keyframes lc-card-d{from{transform:translateY(-38px);opacity:0}to{transform:translateY(0);opacity:1}}
-/* Soluciones — brand hover glow */
-.card-hover-siigo{transition:box-shadow .25s ease,border-color .25s ease,transform .25s ease}
-.card-hover-siigo:hover{box-shadow:0 12px 40px rgba(27,77,183,0.18),0 2px 10px rgba(27,77,183,0.07);border-color:rgba(27,77,183,0.3)!important;transform:translateY(-5px)}
-.card-hover-soft{transition:box-shadow .25s ease,border-color .25s ease,transform .25s ease}
-.card-hover-soft:hover{box-shadow:0 12px 40px rgba(232,80,10,0.18),0 2px 10px rgba(232,80,10,0.07);border-color:rgba(232,80,10,0.3)!important;transform:translateY(-5px)}
-.card-hover-zoho{transition:box-shadow .25s ease,border-color .25s ease,transform .25s ease}
-.card-hover-zoho:hover{box-shadow:0 12px 40px rgba(200,32,44,0.18),0 2px 10px rgba(200,32,44,0.07);border-color:rgba(200,32,44,0.3)!important;transform:translateY(-5px)}
-</style>
-@endpush
+@php
+$slides = [
+    ['key' => 'logia',
+     'eyebrow'  => 'Partner oficial · Siigo Aspel · Soft Restaurant · Zoho · Microsoft',
+     'titleA'   => 'Integramos ', 'titleEm' => 'tecnología', 'titleB' => ' y crecimiento para tu negocio.',
+     'lede'     => 'Somos consultores certificados en cuatro ecosistemas. Tú nos cuentas qué mueves; nosotros elegimos, implementamos y capacitamos a tu equipo.',
+     'ctaA'     => ['label' => 'Ver productos',             'href' => route('partner.aspel')],
+     'ctaB'     => ['label' => 'Agendar diagnóstico gratis','href' => route('booking')],
+     'dotLabel' => 'Logia Consulting'],
+    ['key' => 'aspel',
+     'eyebrow'  => 'Partner Siigo Aspel · Gold desde 2012',
+     'titleA'   => 'Siigo Aspel ', 'titleEm' => 'COI, NOI, BANCO', 'titleB' => ' — timbra y cierra tu mes.',
+     'lede'     => 'Licencias originales, timbres SAT, implementación y soporte en español. La suite fiscal y administrativa líder en México.',
+     'ctaA'     => ['label' => 'Ver productos Aspel', 'href' => route('partner.aspel')],
+     'ctaB'     => ['label' => 'Comparar licencias',  'href' => route('booking')],
+     'dotLabel' => 'Siigo Aspel'],
+    ['key' => 'softrestaurant',
+     'eyebrow'  => 'Distribuidor autorizado · Soft Restaurant',
+     'titleA'   => 'POS para ', 'titleEm' => 'restaurantes', 'titleB' => ' que operan en serio.',
+     'lede'     => 'Comandas, inventarios por receta, control de mesas y delivery Rappi/UberEats en un solo POS. De 1 a 200 sucursales.',
+     'ctaA'     => ['label' => 'Conocer Soft Restaurant', 'href' => route('partner.soft')],
+     'ctaB'     => ['label' => 'Agendar demo',            'href' => route('booking')],
+     'dotLabel' => 'Soft Restaurant'],
+    ['key' => 'zoho',
+     'eyebrow'  => 'Authorized Partner · Zoho',
+     'titleA'   => 'Zoho: ', 'titleEm' => '45+ apps', 'titleB' => ' trabajando como una sola.',
+     'lede'     => 'CRM, Books, People, Projects, Desk — toda tu operación bajo un login, un dashboard y una factura.',
+     'ctaA'     => ['label' => 'Explorar Zoho', 'href' => route('partner.zoho')],
+     'ctaB'     => ['label' => 'Probar 30 días', 'href' => route('booking')],
+     'dotLabel' => 'Zoho'],
+    ['key' => 'campus',
+     'eyebrow'  => 'Campus Logia · Cursos certificados DC-3',
+     'titleA'   => 'Tu equipo, ', 'titleEm' => 'certificado', 'titleB' => ' sin salir de la oficina.',
+     'lede'     => 'Aula virtual con DRM, constancia STPS DC-3 y rutas por rol: contador, administrador, gerente de restaurante o IT manager. Desde $990 por curso.',
+     'ctaA'     => ['label' => 'Explorar Campus',      'href' => url('/campus')],
+     'ctaB'     => ['label' => 'Ver catálogo de cursos','href' => url('/campus')],
+     'dotLabel' => 'Campus Logia'],
+];
+
+/* colores y fondos por slide — alimentan x-effect en la sección hero */
+$slideMeta = [
+    ['color' => '#FF6B00', 'bg' => 'linear-gradient(140deg,#FFF5F0,#FFFFFF)'],
+    ['color' => '#009DFF', 'bg' => 'linear-gradient(140deg,#EBF7FF,#FFFFFF)'],
+    ['color' => '#E25724', 'bg' => 'linear-gradient(140deg,#FFF1ED,#FFFFFF)'],
+    ['color' => '#E42527', 'bg' => 'linear-gradient(140deg,#FFF0F0,#FFFFFF)'],
+    ['color' => '#7C3AED', 'bg' => 'linear-gradient(140deg,#F5F0FF,#FFFFFF)'],
+];
+
+$services = [
+    ['icon' => 'consulting', 'title' => 'Consultoría de negocio',
+     'body' => 'Diagnosticamos procesos y recomendamos la stack correcta — Aspel, Zoho o Microsoft — para tu etapa.',
+     'meta' => '20+ años · 500+ empresas'],
+    ['icon' => 'impl',       'title' => 'Implementación',
+     'body' => 'Migraciones, parametrización y puesta en marcha con consultores certificados por cada fabricante.',
+     'meta' => 'Metodología Logia 6 fases'],
+    ['icon' => 'training',   'title' => 'Capacitación DC-3',
+     'body' => 'Cursos avalados con constancia STPS. Presencial en WTC, Coapa, Polanco o 100% remoto.',
+     'meta' => 'Campus Logia online'],
+    ['icon' => 'support',    'title' => 'Soporte en sitio y remoto',
+     'body' => 'Mesa de ayuda, monitoreo y SLA empresarial. Respuesta en <15 min para clientes Premium.',
+     'meta' => 'CDMX + 24/7 remoto'],
+];
+
+$tabs = [
+    'todos' => [
+        ['slug' => 'aspel-coi',   'brandTag' => 'SA',   'brandLogo' => '/images/brands/siigo.png',
+         'brandColor' => '#009DFF', 'name' => 'Aspel COI 10.0',
+         'desc' => 'Contabilidad integral con CFDI 4.0 y complementos SAT.',
+         'price' => '$7,980', 'priceMeta' => 'anual · 1 usuario', 'badge' => 'Best-seller',
+         'route' => route('partner.aspel')],
+        ['slug' => 'soft-pro',    'brandTag' => 'SR',   'brandLogo' => '/images/brands/softrestauran.png',
+         'brandColor' => '#E25724', 'name' => 'Soft Restaurant Pro',
+         'desc' => 'POS para restaurante con 3 cajas, inventarios y recetas.',
+         'price' => '$18,500', 'priceMeta' => 'anual · 3 cajas', 'badge' => 'Hospitality',
+         'route' => route('partner.soft')],
+        ['slug' => 'zoho-crm',    'brandTag' => 'Z1',   'brandLogo' => '/images/brands/zoho-logo-web.svg',
+         'brandColor' => '#E42527', 'name' => 'Zoho CRM Plus',
+         'desc' => 'CRM + automatización + marketing + helpdesk en un solo plan.',
+         'price' => '$2,399', 'priceMeta' => 'usuario/mes', 'badge' => 'Más cotizado',
+         'route' => route('partner.zoho')],
+    ],
+    'pyme' => [
+        ['slug' => 'm365-std',    'brandTag' => 'M365', 'brandLogo' => '/images/brands/Microsoft.png',
+         'brandColor' => '#05A6F0', 'name' => 'M365 Business Standard',
+         'desc' => 'Apps de escritorio, Teams, correo corporativo y OneDrive 1TB.',
+         'price' => '$320', 'priceMeta' => 'usuario/mes', 'badge' => 'PyME',
+         'route' => route('partner.microsoft')],
+        ['slug' => 'aspel-noi',   'brandTag' => 'SA',   'brandLogo' => '/images/brands/siigo.png',
+         'brandColor' => '#009DFF', 'name' => 'Aspel NOI 11.0',
+         'desc' => 'Nómina con CFDI 4.0 y prestaciones de ley automatizadas.',
+         'price' => '$9,450', 'priceMeta' => 'anual · 50 empleados', 'badge' => 'PyME',
+         'route' => route('partner.aspel')],
+        ['slug' => 'zoho-books',  'brandTag' => 'Z1',   'brandLogo' => '/images/brands/zoho-logo-web.svg',
+         'brandColor' => '#E42527', 'name' => 'Zoho Books',
+         'desc' => 'Contabilidad en la nube con facturación CFDI y bancos mexicanos.',
+         'price' => '$399', 'priceMeta' => 'usuario/mes', 'badge' => 'Nube',
+         'route' => route('partner.zoho')],
+    ],
+    'enterprise' => [
+        ['slug' => 'm365-prem',   'brandTag' => 'M365', 'brandLogo' => '/images/brands/Microsoft.png',
+         'brandColor' => '#05A6F0', 'name' => 'M365 Business Premium',
+         'desc' => 'Intune MDM + Defender + Azure AD Premium para empresas grandes.',
+         'price' => '$450', 'priceMeta' => 'usuario/mes', 'badge' => 'Seguridad',
+         'route' => route('partner.microsoft')],
+        ['slug' => 'aspel-suite', 'brandTag' => 'SA',   'brandLogo' => '/images/brands/siigo.png',
+         'brandColor' => '#009DFF', 'name' => 'Aspel Suite Empresa',
+         'desc' => 'COI + NOI + BANCO + FACTURE con licencias multi-usuario.',
+         'price' => '$48,900', 'priceMeta' => 'anual · 10 usuarios', 'badge' => 'Suite',
+         'route' => route('partner.aspel')],
+        ['slug' => 'zoho-one',    'brandTag' => 'Z1',   'brandLogo' => '/images/brands/zoho-logo-web.svg',
+         'brandColor' => '#E42527', 'name' => 'Zoho One',
+         'desc' => 'Suite completa de 45+ aplicaciones empresariales integradas.',
+         'price' => '$1,299', 'priceMeta' => 'usuario/mes', 'badge' => 'Todo en 1',
+         'route' => route('partner.zoho')],
+    ],
+];
+@endphp
 
 @section('content')
+<main data-brand="logia">
 
-{{-- ══════════════════════════════════════ HERO — Carousel claro · 4 slides ══ --}}
-<section class="relative overflow-hidden"
-    style="min-height:calc(100vh - 72px);background:#FAFAFA"
-    x-data="{
-        c: 0,
-        paused: false,
-        timer: null,
-        start() { this.timer = setInterval(() => { if (!this.paused) this.c = (this.c + 1) % 4; }, 5000); },
-        go(i) { this.c = i; },
-        prev() { this.c = (this.c - 1 + 4) % 4; },
-        next() { this.c = (this.c + 1) % 4; }
-    }"
-    x-init="start(); $watch('c', () => { $nextTick(() => { $el.querySelectorAll('.hero-slide--active .hero-card').forEach(el => { el.style.animation='none'; el.offsetWidth; el.style.animation=''; }); }); })"
-    @mouseenter="paused = true"
-    @mouseleave="paused = false">
+{{-- ══ HERO ══════════════════════════════════════════════════════════════════ --}}
+<section class="hero"
+         x-data="heroCarousel({{ count($slides) }}, @json($slideMeta))"
+         :style="{ '--primary': meta[slide].color, background: meta[slide].bg }"
+         style="transition: background 600ms ease">
+    <div class="container">
+        <div class="hero__inner">
 
-    {{-- ── SLIDE 0: Logia brand — naranja ────────────────────────────────── --}}
-    <div class="hero-slide" :class="c===0 ? 'hero-slide--active' : 'pointer-events-none'">
-        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 45% 80% at 78% 50%,rgba(232,80,10,0.08) 0%,transparent 65%)"></div>
-        <div class="container-brand w-full px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex items-center gap-8 lg:gap-12 py-16 lg:py-0">
-                <div class="flex-1 min-w-0">
-                    <div class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 mb-7" style="background:rgba(232,80,10,0.1)">
-                        <span class="w-1.5 h-1.5 rounded-full" style="background:#E8500A"></span>
-                        <span class="text-[11px] font-bold tracking-[0.18em] uppercase" style="color:#E8500A">Partner Certificado en México</span>
-                    </div>
-                    <h1 class="font-black text-gray-900 tracking-tight mb-5 leading-[0.93]" style="font-size:clamp(2.5rem,5.8vw,4.8rem)">
-                        Integramos<br>
-                        <span style="color:#E8500A">tecnología</span><br>
-                        y crecimiento
-                        <span style="color:#E8500A">empresarial.</span><br>
+            {{-- Copy --}}
+            <div class="hero__copy">
+                @foreach($slides as $i => $s)
+                <div x-show="slide === {{ $i }}"
+                     style="{{ $i === 0 ? '' : 'display:none' }}">
+                    <span class="eyebrow">{{ $s['eyebrow'] }}</span>
+                    <h1 class="hero__title">
+                        {{ $s['titleA'] }}<em>{{ $s['titleEm'] }}</em>{{ $s['titleB'] }}
                     </h1>
-                    <p class="text-gray-500 leading-relaxed mb-8 max-w-md" style="font-size:clamp(0.875rem,1.3vw,1rem)">
-                        Partner oficial de Siigo Aspel, Soft&#8209;Restaurant y Zoho One. Capacitación, implementación y soporte especializado en México.
-                    </p>
-                    <div class="flex items-center gap-4 flex-wrap mb-10">
-                        <a href="{{ url('/productos') }}" class="inline-flex items-center gap-2.5 font-bold text-white rounded-xl transition-all duration-200 hover:-translate-y-0.5"
-                           style="background:#E8500A;padding:0.85rem 1.6rem;font-size:0.875rem;box-shadow:0 6px 24px rgba(232,80,10,0.38)">
-                            Nuestras soluciones
-                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
-                        </a>
-                        <a href="{{ route('booking') }}" class="text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors">
-                            Agendar sesión gratuita →
-                        </a>
-                    </div>
-                    <div class="flex items-center gap-6 pt-8 border-t border-gray-100">
-                        <div><p class="text-xl font-black text-gray-900">5000+</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Empresas</p></div>
-                        <div class="w-px h-8 bg-gray-100"></div>
-                        <div><p class="text-xl font-black text-gray-900">1,200+</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Graduados</p></div>
-                        <div class="w-px h-8 bg-gray-100"></div>
-                        <div><p class="text-xl font-black text-gray-900">25+</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Años exp.</p></div>
+                    <p class="hero__lede">{{ $s['lede'] }}</p>
+                    <div class="hero__ctas">
+                        <a href="{{ $s['ctaA']['href'] }}" class="c-btn c-btn--lg">{{ $s['ctaA']['label'] }}</a>
+                        <a href="{{ $s['ctaB']['href'] }}" class="c-btn c-btn--ghost c-btn--lg">{{ $s['ctaB']['label'] }}</a>
                     </div>
                 </div>
-                <div class="hidden lg:flex items-center justify-center relative shrink-0" style="width:min(480px,44vw);height:min(460px,42vw)">
-                    <div class="absolute rounded-full" style="width:350px;height:350px;border:1.5px solid rgba(232,80,10,0.16);animation:lc-ring 5.5s ease-out infinite"></div>
-                    <div class="absolute rounded-full" style="width:240px;height:240px;border:2px solid rgba(232,80,10,0.28);animation:lc-ring 5.5s ease-out infinite 2.2s"></div>
-                    <div class="absolute rounded-full" style="width:130px;height:130px;background:rgba(232,80,10,0.06)"></div>
-                    <div class="relative flex items-center justify-center select-none"
-                         style="padding:1.1rem 2rem;border-radius:1.4rem;animation:lc-float 5s ease-in-out infinite;
-                                background:linear-gradient(160deg,rgba(255,255,255,0.92) 0%,rgba(232,80,10,0.1) 100%);
-                                border:1px solid rgba(232,80,10,0.32);
-                                box-shadow:0 24px 52px rgba(232,80,10,0.22),0 0 0 1px rgba(255,255,255,0.7) inset">
-                        <div class="text-center">
-                            <p class="font-black text-[1.15rem] leading-none tracking-tight" style="color:#E8500A">Logia</p>
-                            <p class="font-black text-sm leading-none tracking-tight mt-0.5" style="color:#1B4DB7">Consulting</p>
-                            <div class="h-px mt-2 mb-1.5 w-full" style="background:linear-gradient(90deg,transparent,rgba(232,80,10,0.3),transparent)"></div>
-                            <p class="text-[9px] font-bold uppercase tracking-[0.18em]" style="color:#E8500A;opacity:.5">Partner Oficial MX</p>
+                @endforeach
+
+                {{-- Slide dots --}}
+                <div class="hero__slide-nav" role="tablist" aria-label="Slides del hero">
+                    @foreach($slides as $i => $s)
+                    <button class="hero__slide-dot"
+                            :aria-current="slide === {{ $i }} ? 'true' : 'false'"
+                            @click="$data.slide = {{ $i }}"
+                            aria-label="{{ $s['dotLabel'] }}">
+                        <span class="hero__slide-dot__label">{{ $s['dotLabel'] }}</span>
+                    </button>
+                    @endforeach
+                </div>
+
+                {{-- Stats con iconos --}}
+                <div class="hero__stats">
+                    <div style="display:flex;align-items:center;gap:12px">
+                        <div aria-hidden="true" style="width:40px;height:40px;border-radius:10px;background:color-mix(in srgb,var(--primary) 12%,transparent);display:grid;place-items:center;color:var(--primary);flex-shrink:0;transition:background 600ms ease,color 600ms ease">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                        <div>
+                            <div class="hero__stat-num">20<small>+</small></div>
+                            <div class="hero__stat-label">Años acompañando PyMEs</div>
                         </div>
                     </div>
-                    <div class="hero-card absolute" style="top:26px;right:6px;animation:lc-card-r .5s ease-out .2s both,lc-float 5s ease-in-out infinite .72s">
-                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(232,80,10,0.15)">
-                            <p class="text-base font-black text-gray-900">5000+</p>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider whitespace-nowrap">Empresas atendidas</p>
+                    <div style="display:flex;align-items:center;gap:12px">
+                        <div aria-hidden="true" style="width:40px;height:40px;border-radius:10px;background:color-mix(in srgb,var(--primary) 12%,transparent);display:grid;place-items:center;color:var(--primary);flex-shrink:0;transition:background 600ms ease,color 600ms ease">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                        </div>
+                        <div>
+                            <div class="hero__stat-num">500<small>+</small></div>
+                            <div class="hero__stat-label">Clientes activos en México</div>
                         </div>
                     </div>
-                    <div class="hero-card absolute" style="top:30px;left:6px;animation:lc-card-l .5s ease-out .38s both,lc-float 5.5s ease-in-out infinite .88s">
-                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
-                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#E8500A"></span>
-                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">Partner Oficial MX</span>
+                    <div style="display:flex;align-items:center;gap:12px">
+                        <div aria-hidden="true" style="width:40px;height:40px;border-radius:10px;background:color-mix(in srgb,var(--primary) 12%,transparent);display:grid;place-items:center;color:var(--primary);flex-shrink:0;transition:background 600ms ease,color 600ms ease">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
                         </div>
-                    </div>
-                    <div class="hero-card absolute" style="bottom:105px;right:10px;animation:lc-card-r .5s ease-out .52s both,lc-float 4.5s ease-in-out infinite 1.02s">
-                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
-                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#10B981"></span>
-                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">Soporte certificado</span>
-                        </div>
-                    </div>
-                    <div class="hero-card absolute" style="bottom:42px;left:14px;animation:lc-card-u .5s ease-out .65s both,lc-float 6s ease-in-out infinite 1.15s">
-                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(0,0,0,0.07)">
-                            <p class="text-base font-black text-gray-900">1,200+</p>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider">Graduados</p>
+                        <div>
+                            <div class="hero__stat-num">4</div>
+                            <div class="hero__stat-label">Partnerships oficiales</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    {{-- ── SLIDE 1: Siigo Aspel — azul ───────────────────────────────────── --}}
-    <div class="hero-slide" :class="c===1 ? 'hero-slide--active' : 'pointer-events-none'">
-        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 45% 80% at 78% 50%,rgba(27,77,183,0.08) 0%,transparent 65%)"></div>
-        <div class="container-brand w-full px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex items-center gap-8 lg:gap-12 py-16 lg:py-0">
-                <div class="flex-1 min-w-0">
-                    <div class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 mb-7" style="background:rgba(27,77,183,0.09)">
-                        <span class="w-1.5 h-1.5 rounded-full" style="background:#1B4DB7"></span>
-                        <span class="text-[11px] font-bold tracking-[0.18em] uppercase" style="color:#1B4DB7">Siigo Aspel</span>
-                    </div>
-                    <h1 class="font-black text-gray-900 tracking-tight mb-5 leading-[0.93]" style="font-size:clamp(2.5rem,5.8vw,4.8rem)">
-                        Contabilidad<br>
-                        <span style="color:#1B4DB7">sin límites</span><br>
-                        para tu PYME.
-                    </h1>
-                    <p class="text-gray-500 leading-relaxed mb-8 max-w-md" style="font-size:clamp(0.875rem,1.3vw,1rem)">
-                        SAE, COI, NOI, CAJA, FACTURE, BANCO — el ecosistema Aspel completo con implementación y soporte certificado.
-                    </p>
-                    <div class="flex items-center gap-4 flex-wrap mb-10">
-                        <a href="{{ url('/productos/siigo-aspel') }}" class="inline-flex items-center gap-2.5 font-bold text-white rounded-xl transition-all duration-200 hover:-translate-y-0.5"
-                           style="background:#1B4DB7;padding:0.85rem 1.6rem;font-size:0.875rem;box-shadow:0 6px 24px rgba(27,77,183,0.38)">
-                            Ver productos Siigo
-                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
-                        </a>
-                        <a href="{{ route('booking') }}" class="text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors">
-                            Solicitar demo →
-                        </a>
-                    </div>
-                    <div class="flex items-center gap-6 pt-8 border-t border-gray-100">
-                        <div><p class="text-xl font-black text-gray-900">6</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Productos</p></div>
-                        <div class="w-px h-8 bg-gray-100"></div>
-                        <div><p class="text-xl font-black text-gray-900">CFDI 4.0</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Compatible</p></div>
-                        <div class="w-px h-8 bg-gray-100"></div>
-                        <div><p class="text-xl font-black text-gray-900">#1</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">En México</p></div>
-                    </div>
-                </div>
-                <div class="hidden lg:flex items-center justify-center relative shrink-0" style="width:min(480px,44vw);height:min(460px,42vw)">
-                    <div class="absolute rounded-full" style="width:350px;height:350px;border:1.5px solid rgba(27,77,183,0.16);animation:lc-ring 5.5s ease-out infinite"></div>
-                    <div class="absolute rounded-full" style="width:240px;height:240px;border:2px solid rgba(27,77,183,0.28);animation:lc-ring 5.5s ease-out infinite 2.2s"></div>
-                    <div class="absolute rounded-full" style="width:130px;height:130px;background:rgba(27,77,183,0.06)"></div>
-                    <div class="relative flex items-center justify-center select-none"
-                         style="padding:1.1rem 2.2rem;border-radius:1.4rem;animation:lc-float 5s ease-in-out infinite;
-                                background:linear-gradient(160deg,rgba(255,255,255,0.92) 0%,rgba(27,77,183,0.1) 100%);
-                                border:1px solid rgba(27,77,183,0.32);
-                                box-shadow:0 24px 52px rgba(27,77,183,0.22),0 0 0 1px rgba(255,255,255,0.7) inset">
-                        <div class="text-center">
-                            <p class="font-black text-2xl leading-none tracking-tight" style="color:#1B4DB7">SIIGO</p>
-                            <div class="h-px mt-2 mb-1.5 w-full" style="background:linear-gradient(90deg,transparent,rgba(27,77,183,0.3),transparent)"></div>
-                            <p class="text-[9px] font-bold uppercase tracking-[0.18em]" style="color:#1B4DB7;opacity:.5">Aspel · México</p>
-                        </div>
-                    </div>
-                    <div class="hero-card absolute" style="top:26px;right:6px;animation:lc-card-r .5s ease-out .2s both,lc-float 5s ease-in-out infinite .72s">
-                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(27,77,183,0.15)">
-                            <p class="text-base font-black" style="color:#1B4DB7">CFDI 4.0</p>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider whitespace-nowrap">Facturación electrónica</p>
-                        </div>
-                    </div>
-                    <div class="hero-card absolute" style="top:30px;left:6px;animation:lc-card-l .5s ease-out .38s both,lc-float 5.5s ease-in-out infinite .88s">
-                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
-                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#1B4DB7"></span>
-                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">SAE · COI · NOI · BANCO</span>
-                        </div>
-                    </div>
-                    <div class="hero-card absolute" style="bottom:105px;right:10px;animation:lc-card-r .5s ease-out .52s both,lc-float 4.5s ease-in-out infinite 1.02s">
-                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
-                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#10B981"></span>
-                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">Licencias oficiales</span>
-                        </div>
-                    </div>
-                    <div class="hero-card absolute" style="bottom:42px;left:14px;animation:lc-card-u .5s ease-out .65s both,lc-float 6s ease-in-out infinite 1.15s">
-                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(0,0,0,0.07)">
-                            <p class="text-base font-black text-gray-900">IMSS · SAT</p>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider">Integrado</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            {{-- Visual 3D --}}
+            <div class="hero__visual" aria-hidden="true"
+                 x-data="heroVisual()"
+                 @pointermove="onMove"
+                 @pointerleave="onLeave"
+                 style="perspective:1400px;position:relative;min-height:460px">
+                <div x-ref="stage" style="position:relative;width:100%;height:460px;transform-style:preserve-3d;transition:transform 160ms cubic-bezier(0.2,0.8,0.2,1)">
 
-    {{-- ── SLIDE 2: Soft-Restaurant — naranja ────────────────────────────── --}}
-    <div class="hero-slide" :class="c===2 ? 'hero-slide--active' : 'pointer-events-none'">
-        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 45% 80% at 78% 50%,rgba(232,80,10,0.08) 0%,transparent 65%)"></div>
-        <div class="container-brand w-full px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex items-center gap-8 lg:gap-12 py-16 lg:py-0">
-                <div class="flex-1 min-w-0">
-                    <div class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 mb-7" style="background:rgba(232,80,10,0.1)">
-                        <span class="w-1.5 h-1.5 rounded-full" style="background:#E8500A"></span>
-                        <span class="text-[11px] font-bold tracking-[0.18em] uppercase" style="color:#E8500A">Soft-Restaurant</span>
-                    </div>
-                    <h1 class="font-black text-gray-900 tracking-tight mb-5 leading-[0.93]" style="font-size:clamp(2.5rem,5.8vw,4.8rem)">
-                        Tu restaurante,<br>
-                        siempre en<br>
-                        <span style="color:#E8500A">control.</span>
-                    </h1>
-                    <p class="text-gray-500 leading-relaxed mb-8 max-w-md" style="font-size:clamp(0.875rem,1.3vw,1rem)">
-                        Sistema integral de punto de venta, cocina, inventarios y reportes para Food &amp; Beverage en México.
-                    </p>
-                    <div class="flex items-center gap-4 flex-wrap mb-10">
-                        <a href="{{ url('/productos/soft-restaurant') }}" class="inline-flex items-center gap-2.5 font-bold text-white rounded-xl transition-all duration-200 hover:-translate-y-0.5"
-                           style="background:linear-gradient(135deg,#C44508,#E8500A);padding:0.85rem 1.6rem;font-size:0.875rem;box-shadow:0 6px 24px rgba(232,80,10,0.38)">
-                            Explorar Soft-Restaurant
-                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
-                        </a>
-                        <a href="{{ route('booking') }}" class="text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors">
-                            Solicitar demo →
-                        </a>
-                    </div>
-                    <div class="flex items-center gap-6 pt-8 border-t border-gray-100">
-                        <div><p class="text-xl font-black text-gray-900">POS</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Táctil</p></div>
-                        <div class="w-px h-8 bg-gray-100"></div>
-                        <div><p class="text-xl font-black text-gray-900">F&amp;B</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Especializado</p></div>
-                        <div class="w-px h-8 bg-gray-100"></div>
-                        <div><p class="text-xl font-black text-gray-900">Inv.</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Tiempo real</p></div>
-                    </div>
-                </div>
-                <div class="hidden lg:flex items-center justify-center relative shrink-0" style="width:min(480px,44vw);height:min(460px,42vw)">
-                    <div class="absolute rounded-full" style="width:350px;height:350px;border:1.5px solid rgba(232,80,10,0.16);animation:lc-ring 5.5s ease-out infinite"></div>
-                    <div class="absolute rounded-full" style="width:240px;height:240px;border:2px solid rgba(232,80,10,0.28);animation:lc-ring 5.5s ease-out infinite 2.2s"></div>
-                    <div class="absolute rounded-full" style="width:130px;height:130px;background:rgba(232,80,10,0.06)"></div>
-                    <div class="relative flex items-center justify-center select-none"
-                         style="padding:1.1rem 1.6rem;border-radius:1.4rem;animation:lc-float 5s ease-in-out infinite;
-                                background:linear-gradient(160deg,rgba(255,255,255,0.92) 0%,rgba(232,80,10,0.1) 100%);
-                                border:1px solid rgba(232,80,10,0.32);
-                                box-shadow:0 24px 52px rgba(232,80,10,0.22),0 0 0 1px rgba(255,255,255,0.7) inset">
-                        <div class="text-center">
-                            <p class="font-black text-[1.05rem] leading-none tracking-tight" style="color:#E8500A">Soft-Restaurant</p>
-                            <div class="h-px mt-2 mb-1.5 w-full" style="background:linear-gradient(90deg,transparent,rgba(232,80,10,0.3),transparent)"></div>
-                            <p class="text-[9px] font-bold uppercase tracking-[0.18em]" style="color:#E8500A;opacity:.5">Sistema F&amp;B</p>
-                        </div>
-                    </div>
-                    <div class="hero-card absolute" style="top:26px;right:6px;animation:lc-card-r .5s ease-out .2s both,lc-float 5s ease-in-out infinite .72s">
-                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(232,80,10,0.15)">
-                            <p class="text-base font-black" style="color:#E8500A">POS Táctil</p>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider whitespace-nowrap">Punto de venta</p>
-                        </div>
-                    </div>
-                    <div class="hero-card absolute" style="top:30px;left:6px;animation:lc-card-l .5s ease-out .38s both,lc-float 5.5s ease-in-out infinite .88s">
-                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
-                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#E8500A"></span>
-                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">Control de cocina</span>
-                        </div>
-                    </div>
-                    <div class="hero-card absolute" style="bottom:105px;right:10px;animation:lc-card-r .5s ease-out .52s both,lc-float 4.5s ease-in-out infinite 1.02s">
-                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
-                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#10B981"></span>
-                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">Reportes F&amp;B</span>
-                        </div>
-                    </div>
-                    <div class="hero-card absolute" style="bottom:42px;left:14px;animation:lc-card-u .5s ease-out .65s both,lc-float 6s ease-in-out infinite 1.15s">
-                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(0,0,0,0.07)">
-                            <p class="text-base font-black text-gray-900">Inventarios</p>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider">Tiempo real</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                    {{-- Órbitas --}}
+                    <svg viewBox="0 0 560 460" style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true">
+                        <ellipse cx="280" cy="230" rx="240" ry="140" fill="none" stroke="var(--border)" stroke-width="1" stroke-dasharray="2 6"/>
+                        <ellipse cx="280" cy="230" rx="190" ry="110" fill="none" stroke="var(--border)" stroke-width="1"/>
+                        <circle  cx="280" cy="230" r="140" fill="var(--primary)" opacity="0.08"/>
+                    </svg>
 
-    {{-- ── SLIDE 3: Zoho One — rojo ───────────────────────────────────────── --}}
-    <div class="hero-slide" :class="c===3 ? 'hero-slide--active' : 'pointer-events-none'">
-        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(ellipse 45% 80% at 78% 50%,rgba(200,32,44,0.08) 0%,transparent 65%)"></div>
-        <div class="container-brand w-full px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex items-center gap-8 lg:gap-12 py-16 lg:py-0">
-                <div class="flex-1 min-w-0">
-                    <div class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 mb-7" style="background:rgba(200,32,44,0.09)">
-                        <span class="w-1.5 h-1.5 rounded-full" style="background:#C8202C"></span>
-                        <span class="text-[11px] font-bold tracking-[0.18em] uppercase" style="color:#C8202C">Zoho One</span>
+                    {{-- Logo central flotante --}}
+                    <div style="position:absolute;left:50%;top:50%;width:210px;height:210px;margin-left:-105px;margin-top:-105px;display:grid;place-items:center;transform:translateZ(40px);transition:transform 160ms cubic-bezier(0.2,0.8,0.2,1)">
+                        <img src="{{ asset('images/Original_Logo_Logia_Consulting.png') }}"
+                             alt="Logia Consulting"
+                             style="width:100%;height:100%;object-fit:contain">
                     </div>
-                    <h1 class="font-black text-gray-900 tracking-tight mb-5 leading-[0.93]" style="font-size:clamp(2.5rem,5.8vw,4.8rem)">
-                        40+ apps.<br>
-                        Una sola<br>
-                        <span style="color:#C8202C">suscripción.</span>
-                    </h1>
-                    <p class="text-gray-500 leading-relaxed mb-8 max-w-md" style="font-size:clamp(0.875rem,1.3vw,1rem)">
-                        CRM, Contabilidad, RRHH, Proyectos y más — toda la suite empresarial Zoho en un partner de confianza.
-                    </p>
-                    <div class="flex items-center gap-4 flex-wrap mb-10">
-                        <a href="{{ url('/productos/zoho-one') }}" class="inline-flex items-center gap-2.5 font-bold text-white rounded-xl transition-all duration-200 hover:-translate-y-0.5"
-                           style="background:linear-gradient(135deg,#A81A25,#C8202C);padding:0.85rem 1.6rem;font-size:0.875rem;box-shadow:0 6px 24px rgba(200,32,44,0.38)">
-                            Explorar Zoho One
-                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
-                        </a>
-                        <a href="{{ route('booking') }}" class="text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors">
-                            Solicitar demo →
-                        </a>
-                    </div>
-                    <div class="flex items-center gap-6 pt-8 border-t border-gray-100">
-                        <div><p class="text-xl font-black text-gray-900">40+</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Apps</p></div>
-                        <div class="w-px h-8 bg-gray-100"></div>
-                        <div><p class="text-xl font-black text-gray-900">1 solo</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Precio</p></div>
-                        <div class="w-px h-8 bg-gray-100"></div>
-                        <div><p class="text-xl font-black text-gray-900">MX</p><p class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5">Partner oficial</p></div>
-                    </div>
-                </div>
-                <div class="hidden lg:flex items-center justify-center relative shrink-0" style="width:min(480px,44vw);height:min(460px,42vw)">
-                    <div class="absolute rounded-full" style="width:350px;height:350px;border:1.5px solid rgba(200,32,44,0.16);animation:lc-ring 5.5s ease-out infinite"></div>
-                    <div class="absolute rounded-full" style="width:240px;height:240px;border:2px solid rgba(200,32,44,0.28);animation:lc-ring 5.5s ease-out infinite 2.2s"></div>
-                    <div class="absolute rounded-full" style="width:130px;height:130px;background:rgba(200,32,44,0.06)"></div>
-                    <div class="relative flex items-center justify-center select-none"
-                         style="padding:1.1rem 2.2rem;border-radius:1.4rem;animation:lc-float 5s ease-in-out infinite;
-                                background:linear-gradient(160deg,rgba(255,255,255,0.92) 0%,rgba(200,32,44,0.1) 100%);
-                                border:1px solid rgba(200,32,44,0.32);
-                                box-shadow:0 24px 52px rgba(200,32,44,0.22),0 0 0 1px rgba(255,255,255,0.7) inset">
-                        <div class="text-center">
-                            <p class="font-black text-2xl leading-none tracking-tight" style="color:#C8202C">Zoho One</p>
-                            <div class="h-px mt-2 mb-1.5 w-full" style="background:linear-gradient(90deg,transparent,rgba(200,32,44,0.3),transparent)"></div>
-                            <p class="text-[9px] font-bold uppercase tracking-[0.18em]" style="color:#C8202C;opacity:.5">Suite · 40+ Apps</p>
+
+                    {{-- Tarjeta: clientes --}}
+                    <div data-depth="70" style="position:absolute;left:24px;top:40px;width:168px;height:96px;transform:translateZ(70px);transition:transform 160ms cubic-bezier(0.2,0.8,0.2,1);border-radius:14px;background:var(--surface);border:1px solid var(--border);box-shadow:0 27px 59px rgba(15,23,42,0.14);padding:14px">
+                        <div style="font-size:28px;font-weight:700;color:var(--text);letter-spacing:-0.02em">500+</div>
+                        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Clientes activos</div>
+                        <div style="margin-top:12px;height:6px;border-radius:4px;background:var(--surface-2);overflow:hidden">
+                            <div style="width:68%;height:100%;background:var(--primary)"></div>
                         </div>
                     </div>
-                    <div class="hero-card absolute" style="top:26px;right:6px;animation:lc-card-r .5s ease-out .2s both,lc-float 5s ease-in-out infinite .72s">
-                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(200,32,44,0.15)">
-                            <p class="text-base font-black" style="color:#C8202C">40+ Apps</p>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider whitespace-nowrap">Integradas</p>
+
+                    {{-- Tarjeta: partner badge --}}
+                    <div data-depth="90" style="position:absolute;left:380px;top:20px;width:150px;height:52px;transform:translateZ(90px);transition:transform 160ms cubic-bezier(0.2,0.8,0.2,1);border-radius:14px;background:var(--primary);border:none;box-shadow:0 32px 69px rgba(15,23,42,0.15);padding:0 16px;display:flex;align-items:center;gap:10px">
+                        <span style="width:8px;height:8px;border-radius:50%;background:#fff;flex-shrink:0"></span>
+                        <div style="color:#fff">
+                            <div style="font-size:13px;font-weight:700;line-height:1.1">Partner oficial</div>
+                            <div style="font-size:11px;opacity:.85;margin-top:2px">4 ecosistemas</div>
                         </div>
                     </div>
-                    <div class="hero-card absolute" style="top:30px;left:6px;animation:lc-card-l .5s ease-out .38s both,lc-float 5.5s ease-in-out infinite .88s">
-                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
-                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#C8202C"></span>
-                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">CRM · HR · Books</span>
+
+                    {{-- Tarjeta: años --}}
+                    <div data-depth="110" style="position:absolute;left:400px;top:280px;width:130px;height:130px;transform:translateZ(110px);transition:transform 160ms cubic-bezier(0.2,0.8,0.2,1);border-radius:50%;background:var(--primary);box-shadow:0 37px 79px rgba(15,23,42,0.16);display:grid;place-items:center">
+                        <div style="text-align:center;color:#fff">
+                            <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em">20+</div>
+                            <div style="font-size:11px;opacity:.9;letter-spacing:.1em;text-transform:uppercase;margin-top:2px">años</div>
                         </div>
                     </div>
-                    <div class="hero-card absolute" style="bottom:105px;right:10px;animation:lc-card-r .5s ease-out .52s both,lc-float 4.5s ease-in-out infinite 1.02s">
-                        <div class="flex items-center gap-2 bg-white rounded-xl px-3.5 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.07)">
-                            <span class="w-2 h-2 rounded-full shrink-0" style="background:#10B981"></span>
-                            <span class="text-[11px] font-semibold text-gray-700 whitespace-nowrap">Suite completa</span>
+
+                    {{-- Tarjeta: servicios --}}
+                    <div data-depth="60" style="position:absolute;left:30px;top:300px;width:188px;height:110px;transform:translateZ(60px);transition:transform 160ms cubic-bezier(0.2,0.8,0.2,1);border-radius:14px;background:var(--surface);border:1px solid var(--border);box-shadow:0 24px 54px rgba(15,23,42,0.13);padding:14px">
+                        <div style="font-size:10px;font-weight:700;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px">Incluye</div>
+                        @foreach(['Consultoría','Implementación','Capacitación'] as $row)
+                        <div style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px;color:var(--text)">
+                            <span style="width:5px;height:5px;border-radius:50%;background:var(--primary);flex-shrink:0"></span> {{ $row }}
                         </div>
-                    </div>
-                    <div class="hero-card absolute" style="bottom:42px;left:14px;animation:lc-card-u .5s ease-out .65s both,lc-float 6s ease-in-out infinite 1.15s">
-                        <div class="bg-white rounded-xl px-4 py-2.5" style="box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid rgba(0,0,0,0.07)">
-                            <p class="text-base font-black text-gray-900">Analytics</p>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider">+ Projects + Desk</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- ── DOTS + FLECHAS ─────────────────────────────────────────────────── --}}
-    <div class="absolute bottom-6 left-0 right-0 z-20 flex items-center justify-center gap-3">
-        <button @click="prev()" class="p-1.5 rounded-full hover:bg-black/5 transition-colors" aria-label="Anterior">
-            <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-        </button>
-        <template x-for="i in 4" :key="i">
-            <button @click="go(i-1)"
-                    class="rounded-full transition-all duration-500"
-                    :class="c === i-1 ? 'w-7 h-2 bg-gray-800' : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'"
-                    :aria-label="'Slide ' + i"></button>
-        </template>
-        <button @click="next()" class="p-1.5 rounded-full hover:bg-black/5 transition-colors" aria-label="Siguiente">
-            <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </button>
-    </div>
-
-    {{-- ── CONTADOR ──────────────────────────────────────────────────────── --}}
-    <div class="absolute top-6 right-6 z-20 hidden lg:flex items-baseline gap-1 font-mono" aria-hidden="true">
-        <span class="text-gray-700 text-sm font-bold" x-text="String(c+1).padStart(2,'0')"></span>
-        <span class="text-gray-200 text-xs">/</span>
-        <span class="text-gray-200 text-xs">04</span>
-    </div>
-
-</section>
-
-{{-- ═══════════════════════════════════════ SOLUCIONES — Platzi clean cards ══ --}}
-<section class="bg-[#F8FAFC] section-padded">
-    <div class="container-brand">
-        <div class="text-center mb-12">
-            <span class="text-xs font-bold text-[#1B4DB7] uppercase tracking-widest">Nuestras soluciones</span>
-            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-2">Software que transforma tu negocio</h2>
-            <p class="text-gray-500 mt-3 max-w-xl mx-auto text-sm">Partner oficial de las tres plataformas líderes en México. Capacitación, implementación y soporte en un solo lugar.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-            {{-- Siigo Aspel --}}
-            <div class="card-hover-siigo bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col">
-                <div class="p-7 flex flex-col flex-1">
-                    <div class="inline-flex items-center gap-2 mb-4">
-                        <span class="w-2.5 h-2.5 rounded-full" style="background:#1B4DB7"></span>
-                        <span class="text-xs font-bold text-[#1B4DB7] uppercase tracking-wider">Siigo Aspel</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Administración y contabilidad para PYMES</h3>
-                    <p class="text-sm text-gray-500 mb-5 leading-relaxed">SAE, COI, NOI, Facture y más. La suite de gestión más utilizada por contadores en México.</p>
-                    <ul class="space-y-2 mb-7 flex-1">
-                        @foreach(['Contabilidad electrónica CFDI','Facturación y nómina','Control de inventarios y POS'] as $f)
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 shrink-0" fill="#1B4DB7" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ $f }}
-                        </li>
                         @endforeach
-                    </ul>
-                    <a href="{{ url('/productos/siigo-aspel') }}" class="mt-auto flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-semibold text-white hover:-translate-y-0.5 transition-transform" style="background:#1B4DB7">
-                        Ver productos <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </a>
-                </div>
-            </div>
-
-            {{-- Soft-Restaurant --}}
-            <div class="card-hover-soft bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col">
-                <div class="p-7 flex flex-col flex-1">
-                    <div class="inline-flex items-center gap-2 mb-4">
-                        <span class="w-2.5 h-2.5 rounded-full" style="background:#E8500A"></span>
-                        <span class="text-xs font-bold text-[#E8500A] uppercase tracking-wider">Soft-Restaurant</span>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Sistema integral para el sector F&amp;B</h3>
-                    <p class="text-sm text-gray-500 mb-5 leading-relaxed">POS, cocina, inventarios y fidelización para restaurantes, bares, cadenas y franquicias.</p>
-                    <ul class="space-y-2 mb-7 flex-1">
-                        @foreach(['POS táctil multi-terminal','Control de cocina y delivery','Reportes de ventas en tiempo real'] as $f)
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 shrink-0" fill="#E8500A" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ $f }}
-                        </li>
-                        @endforeach
-                    </ul>
-                    <a href="{{ url('/productos/soft-restaurant') }}" class="mt-auto flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-semibold text-white hover:-translate-y-0.5 transition-transform" style="background:#E8500A">
-                        Ver productos <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </a>
-                </div>
-            </div>
-
-            {{-- Zoho One --}}
-            <div class="card-hover-zoho bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col">
-                <div class="p-7 flex flex-col flex-1">
-                    <div class="inline-flex items-center gap-2 mb-4">
-                        <span class="w-2.5 h-2.5 rounded-full" style="background:#C8202C"></span>
-                        <span class="text-xs font-bold text-[#C8202C] uppercase tracking-wider">Zoho One</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-2">Suite empresarial completa (40+ apps)</h3>
-                    <p class="text-sm text-gray-500 mb-5 leading-relaxed">CRM, contabilidad, proyectos, RRHH y más. Una sola plataforma para toda la operación.</p>
-                    <ul class="space-y-2 mb-7 flex-1">
-                        @foreach(['Zoho CRM + Books + People','Automatización de procesos','Reportes y analytics avanzados'] as $f)
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 shrink-0" fill="#C8202C" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ $f }}
-                        </li>
-                        @endforeach
-                    </ul>
-                    <a href="{{ url('/productos/zoho-one') }}" class="mt-auto flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-semibold text-white hover:-translate-y-0.5 transition-transform" style="background:#C8202C">
-                        Ver productos <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </a>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-{{-- ══════════════════════════════ CURSOS — Domestika + Platzi hybrid dark ══ --}}
-<section class="bg-[#0F172A] section-padded">
-    <div class="container-brand">
-        <div class="flex items-end justify-between mb-10">
+{{-- ══ SERVICE STRIP (compact banner) ═══════════════════════════════════════ --}}
+<section class="service-strip">
+    <div class="container">
+        <div class="service-strip__grid">
+            @foreach($services as $s)
+            <div class="service-strip__item">
+                <div class="service-strip__icon" aria-hidden="true">
+                    @if($s['icon'] === 'consulting')
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h10M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="19" cy="12" r="2" fill="currentColor"/></svg>
+                    @elseif($s['icon'] === 'impl')
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="2"/><path d="M10 7h4v7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    @elseif($s['icon'] === 'training')
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 8l9-4 9 4-9 4-9-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M7 11v4c0 1 2 2 5 2s5-1 5-2v-4" stroke="currentColor" stroke-width="2"/></svg>
+                    @else
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3a8 8 0 0 0-8 8v5a2 2 0 0 0 2 2h2v-7H5v-.001A7 7 0 0 1 19 11V11h-3v7h2a2 2 0 0 0 2-2v-5a8 8 0 0 0-8-8z" stroke="currentColor" stroke-width="1.8"/></svg>
+                    @endif
+                </div>
+                <div>
+                    <div class="service-strip__title">{{ $s['title'] }}</div>
+                    <div class="service-strip__body">{{ $s['body'] }}</div>
+                    <div class="service-strip__meta">{{ $s['meta'] }}</div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+{{-- ══ CAMPUS ══════════════════════════════════════════════════════════════════ --}}
+<section class="campus">
+    <div class="container">
+        <div class="campus__grid">
             <div>
-                <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">Campus Logia</span>
-                <h2 class="text-3xl font-bold text-white mt-1">Cursos más populares</h2>
-            </div>
-            <a href="{{ url('/campus') }}" class="hidden sm:flex items-center gap-1 text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors">
-                Ver catálogo <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-            </a>
-        </div>
-
-        @php
-        $courses = [
-            ['brand'=>'Siigo Aspel','color_from'=>'#1B4DB7','color_to'=>'#3B6FE0','level'=>'Básico',
-             'title'=>'Administración SAE para PYMES: Del cero al experto',
-             'instructor_initials'=>'MG','instructor_name'=>'María González','instructor_color'=>'#1B4DB7',
-             'lessons'=>12,'duration'=>'6h 30min','rating'=>4.9,'reviews'=>124],
-            ['brand'=>'Soft-Restaurant','color_from'=>'#C44508','color_to'=>'#E8500A','level'=>'Intermedio',
-             'title'=>'Soft-Restaurant desde cero: Configura tu restaurante',
-             'instructor_initials'=>'CM','instructor_name'=>'Carlos Martínez','instructor_color'=>'#E8500A',
-             'lessons'=>8,'duration'=>'4h 15min','rating'=>4.8,'reviews'=>87],
-            ['brand'=>'Zoho One','color_from'=>'#A81A25','color_to'=>'#C8202C','level'=>'Avanzado',
-             'title'=>'Zoho CRM Avanzado: Automatiza tu proceso comercial',
-             'instructor_initials'=>'AL','instructor_name'=>'Ana López','instructor_color'=>'#C8202C',
-             'lessons'=>15,'duration'=>'9h 00min','rating'=>5.0,'reviews'=>56],
-        ];
-        @endphp
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            @foreach($courses as $course)
-            <article class="bg-white/5 border border-white/8 rounded-2xl overflow-hidden flex flex-col hover:bg-white/[0.08] transition-colors group cursor-pointer">
-                {{-- Thumbnail con gradiente de marca --}}
-                <div class="aspect-video relative overflow-hidden" style="background:linear-gradient(135deg,{{ $course['color_from'] }},{{ $course['color_to'] }})">
-                    <span class="absolute top-3 left-3 text-xs font-bold text-white bg-black/30 backdrop-blur-sm px-2.5 py-1 rounded-full">{{ $course['brand'] }}</span>
-                    <span class="absolute top-3 right-3 text-xs text-white/80 bg-black/25 px-2 py-0.5 rounded">{{ $course['level'] }}</span>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                        <div class="w-12 h-12 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center">
-                            <svg class="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <span class="eyebrow" style="color:var(--accent)">Campus Logia · E-learning</span>
+                <h2 style="margin-top:16px" class="campus__title">
+                    Tu equipo, <em>certificado</em> en semanas — no en meses.
+                </h2>
+                <p class="lede" style="margin-top:16px">
+                    Aula virtual con video protegido, PDFs con DRM y tres plantillas de certificado. Rutas de aprendizaje por rol: contador, administrador, gerente de restaurante o IT manager.
+                </p>
+                <ul class="campus__bullets">
+                    <li>
+                        <span class="campus__bullet-num">1</span>
+                        <div><strong>Contenido protegido</strong>
+                            <p>Widevine + FairPlay en video; PDF.js cifrado en documentos. Nada se descarga.</p>
                         </div>
+                    </li>
+                    <li>
+                        <span class="campus__bullet-num">2</span>
+                        <div><strong>Constancia DC-3 STPS</strong>
+                            <p>Cursos avalados con constancia oficial. Tres plantillas de certificado descargable.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="campus__bullet-num">3</span>
+                        <div><strong>Rutas por rol</strong>
+                            <p>Desde $990 por curso. Planes empresa con licencias para todo tu equipo.</p>
+                        </div>
+                    </li>
+                </ul>
+                <div style="margin-top:28px">
+                    <a href="{{ url('/campus') }}" class="c-btn c-btn--accent c-btn--lg">Explorar Campus</a>
+                </div>
+            </div>
+            <div class="campus__player" aria-label="Vista previa del campus">
+                <div class="campus__player-cert">
+                    <div class="campus__player-cert__badge">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2 L14 7 L19 7 L15 11 L17 17 L12 14 L7 17 L9 11 L5 7 L10 7 Z" fill="currentColor"/></svg>
+                    </div>
+                    <div>
+                        <div class="campus__player-cert__label">Constancia</div>
+                        <div class="campus__player-cert__value">DC-3 STPS incluida</div>
                     </div>
                 </div>
-                {{-- Card body —  Domestika instructor chip --}}
-                <div class="p-5 flex flex-col flex-1">
-                    <h3 class="text-white font-semibold text-sm leading-snug mb-3 line-clamp-2">{{ $course['title'] }}</h3>
-                    {{-- Instructor chip (Domestika) --}}
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0" style="background:{{ $course['instructor_color'] }}">{{ $course['instructor_initials'] }}</div>
-                        <span class="text-xs text-white/50">{{ $course['instructor_name'] }}</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- ══ PRODUCTOS DESTACADOS ═══════════════════════════════════════════════════ --}}
+<section class="featured" x-data="{ tab: 'todos' }">
+    <div class="container">
+        <div class="featured__head">
+            <div>
+                <span class="eyebrow">Productos destacados</span>
+                <h2 style="margin-top:16px">Una licencia, una factura, un soporte.</h2>
+            </div>
+            <div class="featured__tabs" role="tablist" aria-label="Filtro por segmento">
+                @foreach(['todos' => 'Todos', 'pyme' => 'PyME', 'enterprise' => 'Enterprise'] as $k => $l)
+                <button :aria-pressed="tab === '{{ $k }}'" @click="tab = '{{ $k }}'">{{ $l }}</button>
+                @endforeach
+            </div>
+        </div>
+
+        @foreach($tabs as $tabKey => $products)
+        <div class="featured__grid" x-show="tab === '{{ $tabKey }}'" style="{{ $tabKey === 'todos' ? '' : 'display:none' }}">
+            @foreach($products as $p)
+            <article class="product3d" data-brand="logia"
+                     x-data="product3dCard()"
+                     @pointermove="onMove"
+                     @pointerleave="onLeave">
+                <div class="product3d__inner" x-ref="inner">
+                    <header class="product3d__header">
+                        {{-- Chip: logo con dimensiones explícitas (fix SVG) --}}
+                        <span class="product3d__brand-chip"
+                              style="background:#fff;border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;min-height:30px">
+                            <img src="{{ $p['brandLogo'] }}"
+                                 alt="{{ $p['brandTag'] }}"
+                                 height="22"
+                                 style="height:22px;width:auto;max-width:80px;object-fit:contain;pointer-events:none;display:block"
+                                 onerror="this.parentElement.style.background='{{ $p['brandColor'] }}';this.style.display='none';this.insertAdjacentHTML('afterend','<span style=color:#fff;font-size:11px;font-weight:700;letter-spacing:.06em>{{ $p['brandTag'] }}</span>')">
+                        </span>
+                        <div class="product3d__price">
+                            <div class="product3d__price-now">{{ $p['price'] }}</div>
+                            <div class="product3d__price-meta">{{ $p['priceMeta'] }}</div>
+                        </div>
+                    </header>
+                    <div class="product3d__visual">
+                        <div x-ref="badge" class="product3d__badge">{{ $p['badge'] }}</div>
+                        {{-- Floating brand icon --}}
+                        <div x-ref="icon" class="product3d__icon" style="position:absolute;left:18px;bottom:14px">
+                            <div style="width:48px;height:48px;border-radius:12px;background:#fff;box-shadow:0 10px 24px rgba(15,23,42,0.18);display:grid;place-items:center;border:1px solid var(--border)">
+                                <img src="{{ $p['brandLogo'] }}"
+                                     alt="{{ $p['brandTag'] }}"
+                                     width="32" height="32"
+                                     style="width:32px;height:32px;object-fit:contain;pointer-events:none"
+                                     onerror="this.style.display='none'">
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-3 text-xs text-white/35 mb-3">
-                        <span>{{ $course['lessons'] }} lecciones</span><span>·</span><span>{{ $course['duration'] }}</span>
+                    <div>
+                        <div class="product3d__title">{{ $p['name'] }}</div>
+                        <div class="product3d__meta">{{ $p['desc'] }}</div>
                     </div>
-                    {{-- Rating (Udemy) --}}
-                    <div class="flex items-center gap-1.5 mt-auto">
-                        <span class="text-amber-400 text-xs">★★★★★</span>
-                        <span class="text-white text-xs font-semibold">{{ $course['rating'] }}</span>
-                        <span class="text-white/30 text-xs">({{ $course['reviews'] }})</span>
-                    </div>
+                    <a href="{{ $p['route'] }}" class="product3d__cta" style="text-decoration:none">
+                        Ver detalle
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
                 </div>
             </article>
             @endforeach
         </div>
-        <div class="text-center mt-8">
-            <a href="{{ url('/campus') }}" class="inline-flex items-center gap-2 border border-white/15 text-white/60 hover:text-white hover:border-white/30 text-sm font-medium px-6 py-3 rounded-xl transition-all">
-                Ver todos los cursos <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        @endforeach
+    </div>
+</section>
+
+{{-- ══ SOPORTE ════════════════════════════════════════════════════════════════ --}}
+<section class="support">
+    <div class="container">
+        <div class="support__grid">
+            <div>
+                <span class="eyebrow">Soporte técnico</span>
+                <h2 style="margin-top:16px;margin-bottom:16px">Cuando algo se cae, no queremos que esperes.</h2>
+                <p class="lede" style="margin-bottom:28px">Equipo certificado en México, mesa de ayuda en español y SLA contractual. No tercerizamos soporte — todo lo resuelve un consultor Logia.</p>
+                <div class="support__cards">
+                    <article class="support-card">
+                        <span class="support-card__tag">En sitio</span>
+                        <h4>Visita técnica CDMX</h4>
+                        <p>Nuestro equipo se presenta en tu oficina. Cobertura en CDMX, GDL y MTY.</p>
+                    </article>
+                    <article class="support-card">
+                        <span class="support-card__tag">Remoto 24/7</span>
+                        <h4>Mesa de ayuda 24/7</h4>
+                        <p>Chat, teléfono y ticket. Acceso remoto seguro con sesión auditada.</p>
+                    </article>
+                </div>
+            </div>
+            <aside class="support__visual">
+                <span class="eyebrow" style="color:var(--primary)">Plan Enterprise</span>
+                <h2 style="margin-top:16px">Soporte dedicado con consultor asignado.</h2>
+                <p>Un consultor Logia conoce tu setup, tus procesos y tu equipo.</p>
+                <a href="{{ route('booking') }}" class="c-btn c-btn--lg">Cotizar plan</a>
+                <div class="support__visual-sla">
+                    <div><b>15m</b><span>Respuesta Premium</span></div>
+                    <div><b>99.5%</b><span>SLA mensual</span></div>
+                    <div><b>24/7</b><span>Mesa de ayuda</span></div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+{{-- ══ PARTNERS / CERTIFICACIONES ══════════════════════════════════════════════ --}}
+<section class="certs">
+    <div class="container">
+        <div style="text-align:center;margin-bottom:32px">
+            <span class="eyebrow">Partners oficiales autorizados</span>
+            <h2 style="margin-top:16px">4 marcas líderes bajo un solo proveedor certificado.</h2>
+        </div>
+        <div class="certs__row" style="grid-template-columns:repeat(4,1fr)">
+            @foreach([
+                ['name' => 'Siigo Aspel',     'logo' => '/images/brands/siigo.png',          'tag' => 'Partner autorizado', 'route' => 'partner.aspel'],
+                ['name' => 'Soft Restaurant', 'logo' => '/images/brands/softrestauran.png',   'tag' => 'Partner autorizado', 'route' => 'partner.soft'],
+                ['name' => 'Zoho',            'logo' => '/images/brands/zoho-logo-web.svg',   'tag' => 'Partner autorizado', 'route' => 'partner.zoho'],
+                ['name' => 'Microsoft 365',   'logo' => '/images/brands/Microsoft.png',       'tag' => 'Solutions Partner',  'route' => 'partner.microsoft'],
+            ] as $b)
+            <a href="{{ route($b['route']) }}" class="cert-badge"
+               style="padding:24px;background:#fff;border:1px solid var(--border);align-items:center;text-decoration:none">
+                <img src="{{ $b['logo'] }}" alt="{{ $b['name'] }}"
+                     height="48"
+                     style="height:48px;width:auto;max-width:120px;object-fit:contain;margin-bottom:12px"
+                     onerror="this.style.display='none'">
+                <strong>{{ $b['name'] }}</strong>
+                <span>{{ $b['tag'] }}</span>
             </a>
-        </div>
-    </div>
-</section>
-
-{{-- ═══════════════════════════════════ INSTRUCTORES — Domestika style ══ --}}
-<section class="bg-white section-padded">
-    <div class="container-brand">
-        <div class="text-center mb-12">
-            <span class="text-xs font-bold text-[#1B4DB7] uppercase tracking-widest">Nuestro equipo</span>
-            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-2">Aprende de los mejores</h2>
-            <p class="text-gray-500 mt-3 max-w-lg mx-auto text-sm">Instructores certificados con experiencia real en implementación, no solo teoría.</p>
-        </div>
-
-        @php
-        $instructors = [
-            ['initials'=>'MG','color'=>'#1B4DB7','name'=>'María González','role'=>'Experta Siigo Aspel',
-             'bio'=>'15 años implementando Siigo en PYMES mexicanas. Contadora pública certificada y ex-consultora Aspel.','courses'=>5,'students'=>420],
-            ['initials'=>'CM','color'=>'#E8500A','name'=>'Carlos Martínez','role'=>'Consultor Soft-Restaurant',
-             'bio'=>'Ha capacitado más de 80 restaurantes y cadenas de F&B en México y Latinoamérica.','courses'=>3,'students'=>290],
-            ['initials'=>'AL','color'=>'#C8202C','name'=>'Ana López','role'=>'Implementadora Zoho One',
-             'bio'=>'Zoho Partner certificada. Especialista en automatización de procesos con CRM, Books y Analytics.','courses'=>7,'students'=>530],
-        ];
-        @endphp
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            @foreach($instructors as $instructor)
-            <div class="border border-gray-100 rounded-2xl p-6 flex flex-col hover:shadow-md transition-shadow">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0" style="background:{{ $instructor['color'] }}">{{ $instructor['initials'] }}</div>
-                    <div>
-                        <p class="font-semibold text-gray-900 text-sm">{{ $instructor['name'] }}</p>
-                        <p class="text-xs font-semibold mt-0.5" style="color:{{ $instructor['color'] }}">{{ $instructor['role'] }}</p>
-                    </div>
-                </div>
-                <p class="text-sm text-gray-500 leading-relaxed mb-5">{{ $instructor['bio'] }}</p>
-                <div class="flex items-center gap-5 text-xs text-gray-400 mb-5">
-                    <span><strong class="text-gray-700 font-semibold">{{ $instructor['courses'] }}</strong> cursos</span>
-                    <span><strong class="text-gray-700 font-semibold">{{ $instructor['students'] }}</strong> estudiantes</span>
-                </div>
-                <a href="{{ url('/instructores') }}" class="mt-auto text-xs font-semibold flex items-center gap-1 hover:opacity-75 transition-opacity" style="color:{{ $instructor['color'] }}">
-                    Ver perfil <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </a>
-            </div>
             @endforeach
         </div>
     </div>
 </section>
 
-{{-- ══════════════════════════════════════ POR QUÉ LOGIA — 4 valores ══ --}}
-<section class="bg-[#F1F5F9] section-padded">
-    <div class="container-brand">
-        <div class="text-center mb-12">
-            <span class="text-xs font-bold text-[#1B4DB7] uppercase tracking-widest">Por qué elegirnos</span>
-            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-2">La diferencia Logia</h2>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            @php
-            $values = [
-                ['icon'=>'🏆','title'=>'Certificación oficial','desc'=>'Partner certificado de Siigo Aspel, Soft-Restaurant y Zoho One en México.'],
-                ['icon'=>'🎓','title'=>'3 modalidades','desc'=>'Online, virtual en vivo y presencial. Aprende como quieras, cuando quieras.'],
-                ['icon'=>'🛡','title'=>'Garantía 7 días','desc'=>'Si no quedas satisfecho en los primeros 7 días, te devolvemos el 100%.'],
-                ['icon'=>'⚡','title'=>'Soporte post-curso','desc'=>'Acceso a nuestro canal de soporte por 30 días después de completar tu curso.'],
-            ];
-            @endphp
-            @foreach($values as $value)
-            <div class="bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-sm transition-shadow">
-                <div class="text-3xl mb-4">{{ $value['icon'] }}</div>
-                <h3 class="font-bold text-gray-900 mb-2">{{ $value['title'] }}</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">{{ $value['desc'] }}</p>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-{{-- ══════════════════════════════════════════ TESTIMONIOS — Udemy style ══ --}}
-<section class="bg-white section-padded">
-    <div class="container-brand">
-        <div class="text-center mb-12">
-            <span class="text-xs font-bold text-[#1B4DB7] uppercase tracking-widest">Testimonios</span>
-            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mt-2">Lo que dicen nuestros clientes</h2>
-        </div>
-        @php
-        $testimonials = [
-            ['stars'=>5,'quote'=>'Gracias a Logia ahora todo mi equipo maneja SAE correctamente. Los cursos son muy completos y prácticos.',
-             'name'=>'Roberto Sánchez','company'=>'Distribuidora Torres','product'=>'Siigo Aspel','color'=>'#1B4DB7'],
-            ['stars'=>5,'quote'=>'Implementamos Soft-Restaurant en toda nuestra cadena de 5 restaurantes con soporte de Logia. Excelente servicio.',
-             'name'=>'Fernanda Ríos','company'=>'Grupo F&B Capital','product'=>'Soft-Restaurant','color'=>'#E8500A'],
-            ['stars'=>5,'quote'=>'El curso de Zoho CRM cambió la forma en que gestionamos nuestros prospectos. ROI visible desde el primer mes.',
-             'name'=>'Miguel Ángel Torres','company'=>'SolTech PYME','product'=>'Zoho One','color'=>'#C8202C'],
-        ];
-        @endphp
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            @foreach($testimonials as $t)
-            <div class="border border-gray-100 rounded-2xl p-6 flex flex-col">
-                <div class="flex items-center gap-0.5 mb-4">
-                    @for($s = 0; $s < $t['stars']; $s++)
-                    <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                    @endfor
-                </div>
-                <p class="text-sm text-gray-600 leading-relaxed flex-1 mb-5">&ldquo;{{ $t['quote'] }}&rdquo;</p>
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-semibold text-gray-900">{{ $t['name'] }}</p>
-                        <p class="text-xs text-gray-400">{{ $t['company'] }}</p>
-                    </div>
-                    <span class="text-xs font-semibold px-2.5 py-1 rounded-full text-white" style="background:{{ $t['color'] }}">{{ $t['product'] }}</span>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-{{-- ═══════════════════════════════════════════════════ CTA FINAL dark ══ --}}
-<section class="section-padded" style="background:linear-gradient(135deg,#080F1E 0%,#0D1B3E 60%,#163D99 100%)">
-    <div class="container-brand text-center">
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">¿Listo para capacitar a tu equipo?</h2>
-        <p class="text-white/55 max-w-xl mx-auto mb-10 text-lg">Agenda una sesión gratuita de 30 minutos con uno de nuestros especialistas y encuentra el plan ideal para tu empresa.</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="{{ route('booking') }}" class="btn-primary px-8 py-4 text-base">Agendar sesión gratuita</a>
-            <a href="{{ url('/campus') }}" class="inline-flex items-center gap-2 border border-white/20 text-white/80 hover:text-white hover:border-white/40 font-semibold px-8 py-4 rounded-xl text-base transition-all">Ver catálogo de cursos</a>
-        </div>
-        <p class="text-white/30 text-xs mt-8">Respondemos en menos de 2 horas · Lunes a viernes 9am–7pm CST</p>
-    </div>
-</section>
-
+</main>
 @endsection

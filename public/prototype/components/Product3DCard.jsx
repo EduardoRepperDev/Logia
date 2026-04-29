@@ -1,6 +1,13 @@
 // Product3DCard con 3 variantes: tilt | parallax | specular.
 // Usa pointermove sobre el container y lee CSS vars para colores de marca.
 
+const BRAND_LOGO_MAP = {
+  SA:   "/images/brands/siigo.png",
+  SR:   "/images/brands/softrestauran.png",
+  Z1:   "/images/brands/zoho-logo-web.svg",
+  M365: "/images/brands/microsoft%20365%20compact%20logo.png",
+};
+
 const Product3DCard = ({ brand = "aspel", variant = "parallax", product, onOpen }) => {
   const ref = React.useRef(null);
   const innerRef = React.useRef(null);
@@ -47,7 +54,13 @@ const Product3DCard = ({ brand = "aspel", variant = "parallax", product, onOpen 
     <article className="product3d" data-brand={brand} ref={ref} onPointerMove={onMove} onPointerLeave={onLeave}>
       <div className="product3d__inner" ref={innerRef}>
         <header className="product3d__header">
-          <span className="product3d__brand-chip" style={{background: product.brandColor}}>{product.brandTag}</span>
+          <span className="product3d__brand-chip" style={{background: BRAND_LOGO_MAP[product.brandTag] ? "#fff" : product.brandColor, border: BRAND_LOGO_MAP[product.brandTag] ? "1px solid var(--border)" : "none"}}>
+            {BRAND_LOGO_MAP[product.brandTag]
+              ? <img src={BRAND_LOGO_MAP[product.brandTag]} alt={product.brandTag}
+                     style={{maxWidth: "80%", maxHeight: "80%", objectFit: "contain", pointerEvents: "none"}}
+                     onError={e => { const s=e.target.parentElement; s.style.background=product.brandColor; s.style.border="none"; s.textContent=product.brandTag; }}/>
+              : product.brandTag}
+          </span>
           <div className="product3d__price">
             <div className="product3d__price-now">{product.price}</div>
             <div className="product3d__price-meta">{product.priceMeta}</div>
@@ -61,7 +74,11 @@ const Product3DCard = ({ brand = "aspel", variant = "parallax", product, onOpen 
           <div ref={badgeRef} className="product3d__badge">{product.badge}</div>
           <div ref={iconRef} className="product3d__icon" style={{position: "absolute", left: 18, bottom: 14}}>
             <div style={{width: 48, height: 48, borderRadius: 12, background: "#fff", boxShadow: "0 10px 24px rgba(15,23,42,0.18)", display: "grid", placeItems: "center", border: "1px solid var(--border)"}}>
-              <span style={{fontFamily: "var(--font-display)", fontWeight: 700, color: product.brandColor, fontSize: 14, letterSpacing: "-0.02em"}}>{product.brandTag}</span>
+              {BRAND_LOGO_MAP[product.brandTag]
+                ? <img src={BRAND_LOGO_MAP[product.brandTag]} alt={product.brandTag}
+                       style={{width: 32, height: 32, objectFit: "contain", pointerEvents: "none"}}
+                       onError={e => { e.target.replaceWith(Object.assign(document.createElement("span"), {textContent: product.brandTag, style: `font-family:var(--font-display);font-weight:700;color:${product.brandColor};font-size:14px`})); }}/>
+                : <span style={{fontFamily: "var(--font-display)", fontWeight: 700, color: product.brandColor, fontSize: 14, letterSpacing: "-0.02em"}}>{product.brandTag}</span>}
             </div>
           </div>
         </div>

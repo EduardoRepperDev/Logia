@@ -6,7 +6,7 @@ const HERO_SLIDES_VISUAL = {
   logia: {
     accent: "var(--primary)",
     accent2: "var(--accent)",
-    center: { tag: "LC", label: "Logia" },
+    center: { tag: "LC", label: "Logia", logo: "/images/Original_Logo_Logia_Consulting.png" },
     cards: [
       { kind: "kpi",    x: 24,  y: 40,  depth: 70, w: 168, h: 96,  title: "500+", sub: "Clientes activos" },
       { kind: "chip",   x: 380, y: 20,  depth: 90, w: 150, h: 52,  title: "Partner oficial", sub: "4 ecosistemas" },
@@ -17,7 +17,7 @@ const HERO_SLIDES_VISUAL = {
   aspel: {
     accent: "#009DFF",
     accent2: "#3B4758",
-    center: { tag: "SA", label: "Aspel" },
+    center: { tag: "SA", label: "Aspel", logo: "/images/brands/siigo.png" },
     cards: [
       { kind: "invoice", x: 30,  y: 40,  depth: 85, w: 200, h: 130, title: "CFDI 4.0", sub: "Timbrado en línea" },
       { kind: "chip",    x: 390, y: 28,  depth: 100, w: 140, h: 48, title: "COI · NOI · BANCO" },
@@ -28,7 +28,7 @@ const HERO_SLIDES_VISUAL = {
   softrestaurant: {
     accent: "#E25724",
     accent2: "#584569",
-    center: { tag: "SR", label: "Soft" },
+    center: { tag: "SR", label: "Soft", logo: "/images/brands/softrestauran.png" },
     cards: [
       { kind: "kpi",    x: 30,  y: 50,  depth: 80, w: 170, h: 100, title: "3 cajas", sub: "Hospitality POS" },
       { kind: "chip",   x: 390, y: 30,  depth: 105, w: 140, h: 50, title: "Delivery · Rappi" },
@@ -39,7 +39,7 @@ const HERO_SLIDES_VISUAL = {
   zoho: {
     accent: "#E42527",
     accent2: "#226DB4",
-    center: { tag: "Z1", label: "Zoho" },
+    center: { tag: "Z1", label: "Zoho", logo: "/images/brands/zoho-logo-web.svg" },
     cards: [
       { kind: "grid",   x: 25,  y: 40,  depth: 75, w: 200, h: 110, title: "45+ apps", sub: "Zoho One suite" },
       { kind: "chip",   x: 390, y: 30,  depth: 100, w: 140, h: 50, title: "CRM · Books · HR" },
@@ -116,22 +116,31 @@ const HeroVisual = ({ slideKey = "logia" }) => {
           <circle cx="280" cy="230" r="140" fill={data.accent} opacity="0.08"/>
         </svg>
 
-        {/* centro: disco/badge */}
+        {/* centro: logo flotante */}
         <div style={{
           position: "absolute", left: "50%", top: "50%",
-          width: 150, height: 150, marginLeft: -75, marginTop: -75,
-          borderRadius: "50%", background: "var(--surface)",
-          border: `2px solid ${data.accent}`,
+          width: 210, height: 210, marginLeft: -105, marginTop: -105,
           display: "grid", placeItems: "center",
-          boxShadow: "0 20px 50px rgba(15,23,42,0.12)",
           transform: "translateZ(40px)",
           transition: "transform 160ms cubic-bezier(0.2,0.8,0.2,1)",
-          fontFamily: "var(--font-display)",
         }}>
-          <div style={{textAlign: "center"}}>
-            <div style={{ fontSize: 26, fontWeight: 700, color: data.accent, letterSpacing: "-0.02em" }}>{data.center.tag}</div>
-            <div style={{ fontSize: 11, color: "var(--text-muted)", letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 4, fontWeight: 600 }}>{data.center.label}</div>
-          </div>
+          {data.center.logo ? (
+            <img src={data.center.logo} alt={data.center.label}
+                 style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+                 onError={e => {
+                   e.target.style.display = "none";
+                   e.target.parentElement.innerHTML =
+                     `<div style="text-align:center;font-family:var(--font-display)">` +
+                     `<div style="font-size:26px;font-weight:700;color:${data.accent};letter-spacing:-0.02em">${data.center.tag}</div>` +
+                     `<div style="font-size:11px;color:var(--text-muted);letter-spacing:0.14em;text-transform:uppercase;margin-top:4px;font-weight:600">${data.center.label}</div>` +
+                     `</div>`;
+                 }}/>
+          ) : (
+            <div style={{textAlign: "center", fontFamily: "var(--font-display)"}}>
+              <div style={{ fontSize: 26, fontWeight: 700, color: data.accent, letterSpacing: "-0.02em" }}>{data.center.tag}</div>
+              <div style={{ fontSize: 11, color: "var(--text-muted)", letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 4, fontWeight: 600 }}>{data.center.label}</div>
+            </div>
+          )}
         </div>
 
         {/* Tarjetas flotantes */}

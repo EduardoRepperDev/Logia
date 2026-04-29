@@ -52,6 +52,13 @@ const PARTNER_CONTENT = {
   },
 };
 
+const BRAND_LOGOS = {
+  aspel: "/images/brands/siigo.png",
+  softrestaurant: "/images/brands/softrestauran.png",
+  zoho: "/images/brands/zoho-logo-web.svg",
+  microsoft: "/images/brands/microsoft%20365%20compact%20logo.png",
+};
+
 const PartnerLanding = ({ brand, onNavigate, cardVariant }) => {
   const c = PARTNER_CONTENT[brand];
   if (!c) return null;
@@ -78,7 +85,12 @@ const PartnerLanding = ({ brand, onNavigate, cardVariant }) => {
                 Partner oficial Logia · {c.name}
               </span>
               <div className="partner-hero__logo">
-                <span className="partner-hero__logo-mark">{c.tag}</span>
+                <span className="partner-hero__logo-mark partner-hero__logo-mark--img">
+                  {BRAND_LOGOS[brand]
+                    ? <img src={BRAND_LOGOS[brand]} alt={c.name}
+                           onError={e => { e.target.style.display="none"; e.target.parentElement.textContent=c.tag; }}/>
+                    : c.tag}
+                </span>
                 {c.name}
               </div>
               <h1 style={{textWrap: "balance"}}>{c.tagline}</h1>

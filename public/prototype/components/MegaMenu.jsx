@@ -2,28 +2,28 @@
 // Brand info compartido para los 4 partners + productos destacados.
 
 const PARTNERS = [
-  { id: "aspel",          name: "Siigo Aspel",     desc: "Contabilidad, nómina, facturación PyME", hex: "#009DFF", tag: "SA",
+  { id: "aspel",          name: "Siigo Aspel",     desc: "Contabilidad, nómina, facturación PyME", hex: "#009DFF", tag: "SA", logo: "/images/brands/siigo.png",
     categories: ["Contabilidad (COI)","Nómina (NOI)","Banca (BANCO)","Facturación (FACTURE)"],
     products: [
       { slug: "aspel-coi",     name: "Aspel COI",     meta: "Contabilidad integral · Licencia anual" },
       { slug: "aspel-noi",     name: "Aspel NOI",     meta: "Nómina + CFDI 4.0" },
       { slug: "aspel-facture", name: "Aspel FACTURE", meta: "Facturación electrónica" },
     ]},
-  { id: "softrestaurant", name: "Soft Restaurant", desc: "POS para restaurantes, bares y cafeterías", hex: "#E25724", tag: "SR",
+  { id: "softrestaurant", name: "Soft Restaurant", desc: "POS para restaurantes, bares y cafeterías", hex: "#E25724", tag: "SR", logo: "/images/brands/softrestauran.png",
     categories: ["Punto de venta","Inventarios","Delivery","Reservaciones"],
     products: [
       { slug: "soft-pro",      name: "Soft Restaurant Pro", meta: "POS completo · 3 cajas" },
       { slug: "soft-delivery", name: "Soft Delivery",        meta: "Integración Rappi / UberEats" },
       { slug: "soft-stock",    name: "Soft Inventarios",     meta: "Recetas y mermas" },
     ]},
-  { id: "zoho",           name: "Zoho One",         desc: "Suite de 45+ apps de negocio",              hex: "#E42527", tag: "Z1",
+  { id: "zoho",           name: "Zoho One",         desc: "Suite de 45+ apps de negocio",              hex: "#E42527", tag: "Z1", logo: "/images/brands/zoho-logo-web.svg",
     categories: ["CRM","Finanzas","RH","Marketing"],
     products: [
       { slug: "zoho-crm",    name: "Zoho CRM Plus",    meta: "CRM + automatización" },
       { slug: "zoho-books",  name: "Zoho Books",       meta: "Contabilidad con CFDI" },
       { slug: "zoho-people", name: "Zoho People",      meta: "Recursos humanos" },
     ]},
-  { id: "microsoft",      name: "Microsoft 365",    desc: "Productividad, Teams y seguridad",          hex: "#05A6F0", tag: "M365",
+  { id: "microsoft",      name: "Microsoft 365",    desc: "Productividad, Teams y seguridad",          hex: "#05A6F0", tag: "M365", logo: "/images/brands/microsoft%20365%20compact%20logo.png",
     categories: ["Business Basic","Business Standard","Business Premium","Enterprise E3"],
     products: [
       { slug: "m365-basic",   name: "M365 Business Basic",    meta: "Correo, Teams, OneDrive" },
@@ -44,7 +44,11 @@ const MegaMenu = ({ variant, onClose, onNavigate }) => {
           {PARTNERS.map(p => (
             <div key={p.id} className="mega__col">
               <h5 style={{borderBottomColor: p.hex}}>
-                <span className="mega__col-chip" style={{background: p.hex}}>{p.tag}</span>
+                <span className="mega__col-chip" style={{background: "#fff", border: "1px solid var(--border)"}}>
+                  <img src={p.logo} alt={p.name}
+                       style={{maxWidth: "80%", maxHeight: "80%", objectFit: "contain"}}
+                       onError={e => { const s=e.target.parentElement; s.style.background=p.hex; s.textContent=p.tag; }}/>
+                </span>
                 {p.name}
               </h5>
               {p.categories.map(c => <a key={c} href="#" onClick={e => { e.preventDefault(); onNavigate(`/${p.id}`); onClose(); }}>{c}</a>)}
@@ -64,7 +68,11 @@ const MegaMenu = ({ variant, onClose, onNavigate }) => {
           {PARTNERS.map(p => (
             <button key={p.id} className="mega__card" onClick={() => { onNavigate(`/${p.id}`); onClose(); }}
               style={{background: `linear-gradient(160deg, ${p.hex}10, transparent)`, borderColor: `${p.hex}40`}}>
-              <span className="mega__brand-chip" style={{background: p.hex, width: 44, height: 44, fontSize: 15}}>{p.tag}</span>
+              <span className="mega__brand-chip" style={{background: "#fff", border: "1px solid var(--border)", width: 44, height: 44}}>
+                <img src={p.logo} alt={p.name}
+                     style={{maxWidth: "75%", maxHeight: "75%", objectFit: "contain"}}
+                     onError={e => { const s=e.target.parentElement; s.style.background=p.hex; s.textContent=p.tag; }}/>
+              </span>
               <h5>{p.name}</h5>
               <p>{p.desc}</p>
               <ul>

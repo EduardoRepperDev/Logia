@@ -1,0 +1,6 @@
+/* Marketing site — entry point CSS
+   Importa el design system del prototipo (tokens + site)
+   independiente de Tailwind/campus */
+
+@import './tokens.css';
+@import './site.css';
