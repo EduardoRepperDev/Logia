@@ -1,0 +1,29 @@
+MEMBRESÍAS DE SOPORTE — DEFINIR CON CLIENTE ANTES DE DISEÑAR
+
+Plan 1 — BÁSICA
+  Precio mensual: $___
+  Precio anual: $___
+  Incluye:
+    -
+    -
+    -
+
+Plan 2 — PROFESIONAL (destacado)
+  Precio mensual: $___
+  Precio anual: $___
+  Incluye:
+    -
+    -
+    -
+
+Plan 3 — ENTERPRISE
+  Precio mensual: $___ (o "A medida")
+  Incluye:
+    -
+    -
+    -
+
+DIFERENCIADORES VS COMPETENCIA:
+-
+-
+-

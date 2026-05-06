@@ -1,0 +1,18 @@
+marca,producto,categoria,precio_mensual_lista,descuento_anual_pct,badge,destacado
+aspel,SAE,administrativo,963.33,25,Best seller,si
+aspel,COI,contable,485.83,25,,si
+aspel,NOI,nominas,590.00,25,,si
+aspel,BANCO,bancos,505.00,10,,no
+aspel,ADM,administrativo,185.00,20,Económico,no
+aspel,FACTURE,facturacion,217.92,20,,no
+aspel,CAJA,punto-venta,260.00,10,,no
+aspel,PROD,produccion,749.92,10,,no
+soft-restaurant,Pro,pos,,,,si
+soft-restaurant,Lite,pos,,,,no
+soft-restaurant,Delivery,delivery,,,,no
+zoho,Zoho One,suite,,,,si
+zoho,CRM Plus,crm,,,,no
+zoho,Books MX,contable,,,,no
+microsoft-365,Basic,suite,,,,no
+microsoft-365,Standard,suite,,,Más popular,si
+microsoft-365,Premium,suite,,,,no

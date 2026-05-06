@@ -15,7 +15,10 @@
       "PowerShell(npm run build 2>&1)",
       "PowerShell($r = Invoke-WebRequest -Uri \"http://logia-consulting.test/\" -UseBasicParsing -TimeoutSec 10; Write-Host \"HOME: $\\($r.StatusCode\\)\")",
       "PowerShell(\\(Invoke-WebRequest -Uri \"http://logia.test/aspel\" -UseBasicParsing -TimeoutSec 5\\).StatusCode)",
-      "PowerShell($r = Invoke-WebRequest -Uri \"http://localhost/logia-consulting/public/\" -UseBasicParsing -TimeoutSec 10; \"Status: $\\($r.StatusCode\\)\"; if \\($r.Content -match 'stats-strip'\\) { 'stats-strip: FOUND' } else { 'stats-strip: MISSING' }; if \\($r.Content -match 'hero__badges'\\) { 'hero__badges: FOUND' } else { 'hero__badges: MISSING' }; if \\($r.Content -match '25\\\\+ A'\\) { 'H1 text: FOUND' } else { 'H1 text: MISSING' })"
+      "PowerShell($r = Invoke-WebRequest -Uri \"http://localhost/logia-consulting/public/\" -UseBasicParsing -TimeoutSec 10; \"Status: $\\($r.StatusCode\\)\"; if \\($r.Content -match 'stats-strip'\\) { 'stats-strip: FOUND' } else { 'stats-strip: MISSING' }; if \\($r.Content -match 'hero__badges'\\) { 'hero__badges: FOUND' } else { 'hero__badges: MISSING' }; if \\($r.Content -match '25\\\\+ A'\\) { 'H1 text: FOUND' } else { 'H1 text: MISSING' })",
+      "PowerShell(Get-ChildItem -Path \"c:\\\\laragon\\\\www\\\\logia-consulting\" -Directory | ForEach-Object { $_.Name })",
+      "PowerShell(Get-ChildItem \"c:\\\\laragon\\\\www\\\\logia-consulting\" -Directory | Select-Object Name | ForEach-Object { $_.Name })",
+      "PowerShell(\\(Get-ChildItem \"c:\\\\laragon\\\\www\\\\logia-consulting\\\\docs\" -File\\).Count; \\(Get-ChildItem \"c:\\\\laragon\\\\www\\\\logia-consulting\\\\brand-pack\" -File\\).Count)"
     ]
   }
 }

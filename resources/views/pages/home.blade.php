@@ -203,13 +203,15 @@ $testimonials = [
 ];
 $testimonialPages = array_chunk($testimonials, 3);
 
+$slideAccent2 = ['#3B4758','#3B4758','#584569','#226DB4','#7FBA00','#FF6B00'];
 $slidesAlpine = [];
 foreach ($slides as $i => $s) {
     $slidesAlpine[] = [
-        'logo'  => $s['logo'],
-        'name'  => $s['name'],
-        'color' => $slideMeta[$i]['color'],
-        'bg'    => $slideMeta[$i]['bg'],
+        'logo'   => $s['logo'],
+        'name'   => $s['name'],
+        'color'  => $slideMeta[$i]['color'],
+        'color2' => $slideAccent2[$i] ?? '#3B4758',
+        'bg'     => $slideMeta[$i]['bg'],
     ];
 }
 @endphp
@@ -219,7 +221,7 @@ foreach ($slides as $i => $s) {
 
 {{-- ══ HERO ══════════════════════════════════════════════════════════════════ --}}
 <section class="hero"
-         x-data="heroCarousel({{ count($slides) }}, @json($slidesAlpine))"
+         x-data='heroCarousel({{ count($slides) }}, @json($slidesAlpine))'
          :style="{ background: slides[slide].bg }"
          style="background:linear-gradient(140deg,#FFF5F0,#FFFFFF)">
     <div class="container">
@@ -235,6 +237,7 @@ foreach ($slides as $i => $s) {
                         [2, asset('images/brands/softrestauran.png'), 'Soft Restaurant','Distribuidor autorizado'],
                         [3, asset('images/brands/zoho-logo-web.svg'),'Zoho Partner',   'Authorized Partner'],
                         [4, asset('images/brands/Microsoft.png'),    'Microsoft 365',  'Solutions Partner'],
+                        [5, asset('images/Original_Logo_Logia_Consulting.png'), 'Academia Logia', 'Cursos DC-3'],
                     ] as [$idx, $bLogo, $bName, $bTag])
                     <button type="button"
                             class="hero__badge"
@@ -288,39 +291,8 @@ foreach ($slides as $i => $s) {
                              x-ref="centerLogo"
                              style="width:100%;height:100%;object-fit:contain;transition:opacity 220ms ease">
                     </div>
-                    {{-- Card: clientes --}}
-                    <div data-depth="70" style="position:absolute;left:24px;top:40px;width:168px;height:96px;transform:translateZ(70px);transition:transform 160ms cubic-bezier(0.2,0.8,0.2,1);border-radius:14px;background:var(--surface);border:1px solid var(--border);box-shadow:0 27px 59px rgba(15,23,42,0.14);padding:14px">
-                        <div style="font-size:28px;font-weight:700;color:var(--text);letter-spacing:-0.02em">2,000+</div>
-                        <div style="font-size:12px;color:var(--text-muted);margin-top:4px">Clientes activos</div>
-                        <div style="margin-top:12px;height:6px;border-radius:4px;background:var(--surface-2);overflow:hidden">
-                            <div :style="{ width: '82%', height: '100%', background: slides[slide].color }"></div>
-                        </div>
-                    </div>
-                    {{-- Pill: partner certificado --}}
-                    <div data-depth="90" style="position:absolute;left:380px;top:20px;width:155px;height:52px;transform:translateZ(90px);transition:transform 160ms cubic-bezier(0.2,0.8,0.2,1);border-radius:14px;box-shadow:0 32px 69px rgba(15,23,42,0.15);padding:0 16px;display:flex;align-items:center;gap:10px"
-                         :style="{ background: slides[slide].color }">
-                        <span style="width:8px;height:8px;border-radius:50%;background:#fff;flex-shrink:0"></span>
-                        <div style="color:#fff">
-                            <div style="font-size:13px;font-weight:700;line-height:1.1">Partner certificado</div>
-                            <div style="font-size:11px;opacity:.85;margin-top:2px">4 ecosistemas</div>
-                        </div>
-                    </div>
-                    {{-- Circle: años --}}
-                    <div data-depth="110" style="position:absolute;left:400px;top:280px;width:130px;height:130px;transform:translateZ(110px);transition:transform 160ms cubic-bezier(0.2,0.8,0.2,1);border-radius:50%;box-shadow:0 37px 79px rgba(15,23,42,0.16);display:grid;place-items:center"
-                         :style="{ background: slides[slide].color }">
-                        <div style="text-align:center;color:#fff">
-                            <div style="font-size:32px;font-weight:700;letter-spacing:-0.02em">25+</div>
-                            <div style="font-size:11px;opacity:.9;letter-spacing:.1em;text-transform:uppercase;margin-top:2px">años</div>
-                        </div>
-                    </div>
-                    {{-- Card: satisfacción --}}
-                    <div data-depth="60" style="position:absolute;left:30px;top:300px;width:188px;height:100px;transform:translateZ(60px);transition:transform 160ms cubic-bezier(0.2,0.8,0.2,1);border-radius:14px;background:var(--surface);border:1px solid var(--border);box-shadow:0 24px 54px rgba(15,23,42,0.13);padding:14px">
-                        <div style="font-size:10px;font-weight:700;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px">Satisfacción</div>
-                        <div style="font-size:26px;font-weight:700;color:var(--text);letter-spacing:-0.02em">97.3%</div>
-                        <div style="margin-top:10px;height:6px;border-radius:4px;background:var(--surface-2);overflow:hidden">
-                            <div :style="{ width: '97.3%', height: '100%', background: slides[slide].color }"></div>
-                        </div>
-                    </div>
+                    {{-- Per-slide floating cards (brand-specific) --}}
+                    @include('partials.hero-cards')
                 </div>
             </div>
 

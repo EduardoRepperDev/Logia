@@ -1,0 +1,8 @@
+*
+!.gitignore
+!README.md
+!06-brief/
+!06-brief/*.md
+!05-contenido-real/
+!05-contenido-real/*.txt
+!05-contenido-real/*.csv
